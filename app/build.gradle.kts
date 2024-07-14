@@ -45,4 +45,12 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Network
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson.v290)
+    implementation(libs.play.services.auth)
+    implementation(libs.gson)
+
 }
