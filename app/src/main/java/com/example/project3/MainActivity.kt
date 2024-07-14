@@ -78,13 +78,13 @@ class MainActivity : AppCompatActivity() {
                         // UI에 데이터 설정
                         userNameTextView.text = "Name: ${it.userName}"
                         userHeroTextView.text = "Hero Name: ${it.heroName}"
-                        userLvTextView.text = "Lv: ${it.exp?.div(100)}"
-                        userTitleTextView.text = "Title: ${it.title}"
-                        userCoinTextView.text = "Coins: ${it.coin}"
+                        userLvTextView.text = "Lv: ${it.level?.div(100)}"
+                        userTitleTextView.text = "${it.title}"
+                        userCoinTextView.text = "${it.coin}"
 
                         progressBarExp.max = 100
-                        it.exp?.let { exp ->
-                            progressBarExp.progress = exp % 100
+                        it.level?.let { level ->
+                            progressBarExp.progress = level % 100
                         }
                     }
                 } else {

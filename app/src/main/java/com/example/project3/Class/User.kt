@@ -9,8 +9,8 @@ data class User(
     @SerializedName("hero_name")
     val heroName: String?,
 
-    @SerializedName("exp")
-    val exp: Int?,
+    @SerializedName("level")
+    val level: Int?,
 
     @SerializedName("title")
     val title: String?,

@@ -34,7 +34,7 @@ class RankingActivity : AppCompatActivity(), RankingAdapter.OnItemClickListener 
         ApiClient.apiService.getUsers().enqueue(object : Callback<List<User>> {
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
                 if (response.isSuccessful && response.body() != null) {
-                    val users = response.body()!!.sortedByDescending { it.exp }
+                    val users = response.body()!!.sortedByDescending { it.level }
 
                     val gson = Gson()
                     val jsonResponse = gson.toJson(response.body())
@@ -71,7 +71,7 @@ class RankingActivity : AppCompatActivity(), RankingAdapter.OnItemClickListener 
 
         userNameTextView.text = "Name: ${user.userName}"
         heroNameTextView.text = "Hero Name: ${user.heroName}"
-        levelTextView.text = "Level: ${(((user.exp)?: 0) /1000)}"
+        levelTextView.text = "Level: ${(((user.level)?: 0) /1000)}"
         titleTextView.text = "Title: ${user.title}"
         coinTextView.text = "Coin: ${user.coin}"
         ageTextView.text = "Age: ${user.age}"

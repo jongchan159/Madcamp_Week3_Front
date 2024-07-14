@@ -6,10 +6,10 @@ import retrofit2.http.Path
 
 interface APIServer {
 
-    @GET("api/users/")
+    @GET("users/")
     fun getUsers(): Call<List<User>>
 
-    @GET("api/users/{user_id}")
+    @GET("users/{user_id}")
     fun getUserById(@Path("user_id") id: Int): Call<User>
 
 }
