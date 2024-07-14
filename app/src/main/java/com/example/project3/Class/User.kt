@@ -3,6 +3,9 @@ package com.example.project3
 import com.google.gson.annotations.SerializedName
 
 data class User(
+    @SerializedName("user_id")
+    val userId: Int?,
+
     @SerializedName("user_name")
     val userName: String?,
 
@@ -20,6 +23,9 @@ data class User(
 
     @SerializedName("age")
     val age: Int?,
+
+    @SerializedName("ranking")
+    val ranking: Int?,
 
     @SerializedName("background_id")
     val backgroundId: Int?,

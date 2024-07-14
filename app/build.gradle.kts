@@ -53,4 +53,8 @@ dependencies {
     implementation(libs.play.services.auth)
     implementation(libs.gson)
 
+    //gif
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+
 }

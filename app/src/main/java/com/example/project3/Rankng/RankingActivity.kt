@@ -67,6 +67,7 @@ class RankingActivity : AppCompatActivity(), RankingAdapter.OnItemClickListener 
         val titleTextView = dialogView.findViewById<TextView>(R.id.Ranking_dialog_titleTextView)
         val coinTextView = dialogView.findViewById<TextView>(R.id.Ranking_dialog_coinTextView)
         val ageTextView = dialogView.findViewById<TextView>(R.id.Ranking_dialog_ageTextView)
+        val rankingTextView = dialogView.findViewById<TextView>(R.id.Ranking_dialog_rankingTextView)
         val okButton = dialogView.findViewById<Button>(R.id.Ranking_dialog_okButton)
 
         userNameTextView.text = "Name: ${user.userName}"
@@ -75,6 +76,7 @@ class RankingActivity : AppCompatActivity(), RankingAdapter.OnItemClickListener 
         titleTextView.text = "Title: ${user.title}"
         coinTextView.text = "Coin: ${user.coin}"
         ageTextView.text = "Age: ${user.age}"
+        ageTextView.text = "Ranking: ${user.ranking}"
 
         val builder = AlertDialog.Builder(this)
         builder.setView(dialogView)
