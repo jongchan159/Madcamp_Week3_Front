@@ -1,7 +1,9 @@
 package com.example.project3
 
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface APIServer {
@@ -17,6 +19,9 @@ interface APIServer {
 
     @GET("quests/")
     fun getQuests(): Call<List<Quest>>
+
+    @PUT("users/")  // 엔드포인트는 실제 API 경로로 변경
+    fun updateUsers(@Body users: List<User>): Call<Void>
 
 
 }

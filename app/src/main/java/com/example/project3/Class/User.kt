@@ -4,32 +4,32 @@ import com.google.gson.annotations.SerializedName
 
 data class User(
     @SerializedName("user_id")
-    val userId: Int?,
+    var userId: Int?,
 
     @SerializedName("user_name")
-    val userName: String?,
+    var userName: String?,
 
     @SerializedName("hero_name")
-    val heroName: String?,
+    var heroName: String?,
 
     @SerializedName("level")
-    val level: Int?,
+    var level: Int?,
 
     @SerializedName("title")
-    val title: String?,
+    var title: String?,
 
     @SerializedName("coin")
-    val coin: Int?,
+    var coin: Int?,
 
     @SerializedName("age")
-    val age: Int?,
+    var age: Int?,
 
     @SerializedName("ranking")
-    val ranking: Int?,
+    var ranking: Int?,
 
     @SerializedName("background_id")
-    val backgroundId: Int?,
+    var backgroundId: Int?,
 
     @SerializedName("character_id")
-    val characterId: Int?,
+    var characterId: Int?,
 )
