@@ -46,6 +46,10 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    // viewpager
+    implementation (libs.material.v140)
+    implementation (libs.androidx.viewpager2)
+
     // Network
     // Retrofit
     implementation(libs.retrofit)

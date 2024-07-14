@@ -72,7 +72,7 @@ class RankingActivity : AppCompatActivity(), RankingAdapter.OnItemClickListener 
 
         userNameTextView.text = "Name: ${user.userName}"
         heroNameTextView.text = "Hero Name: ${user.heroName}"
-        levelTextView.text = "Level: ${user.level}"
+        levelTextView.text = "Level: ${(((user.level)?: 0) /1000)}"
         titleTextView.text = "Title: ${user.title}"
         coinTextView.text = "Coin: ${user.coin}"
         ageTextView.text = "Age: ${user.age}"
