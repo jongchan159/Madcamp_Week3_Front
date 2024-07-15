@@ -18,6 +18,12 @@ interface APIServer {
     @GET("quests/")
     fun getQuests(): Call<List<Quest>>
 
+    @GET("storeItems")
+    fun getStoreItems(): Call<List<String>>
+
+    @GET("inventoryItems")
+    fun getInventoryItems(): Call<List<String>>
+
 
 }
 
