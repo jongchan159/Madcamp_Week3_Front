@@ -21,7 +21,7 @@
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".GoogleloginActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,7 +36,7 @@
             android:name=".Store.StoreActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".GoogleloginActivity"
             android:exported="false" />
         <activity
             android:name=".RankingActivity"
@@ -44,9 +44,6 @@
         <activity
             android:name=".DiaryActivity"
             android:exported="false" />
-        <activity
-            android:name=".LoginActivity"
-            android:exported="true"></activity>
     </application>
 
 </manifest>
