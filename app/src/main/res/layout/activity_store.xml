@@ -5,60 +5,129 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Store.StoreActivity">
+    tools:context=".Store.StoreActivity"
+    android:background="@drawable/background_store">
+
+    <ImageView
+        android:id="@+id/image_paper_store"
+        android:layout_width="0dp"
+        android:layout_height="257dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="-52dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_muk_store"
+        app:srcCompat="@drawable/paper" />
+
+    <ImageView
+        android:id="@+id/image_paper_item"
+        android:layout_width="0dp"
+        android:layout_height="257dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="-52dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_muk_inven"
+        app:srcCompat="@drawable/paper" />
+
+    <ImageView
+        android:id="@+id/image_muk_title"
+        android:layout_width="150dp"
+        android:layout_height="90dp"
+        android:alpha="0.9"
+        android:src="@drawable/muk"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/image_muk_store"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/store_title_TV"
+        app:srcCompat="@drawable/icon_muk"
+        android:alpha="0.8"/>
+
+    <ImageView
+        android:id="@+id/image_muk_inven"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_paper_store"
+        app:srcCompat="@drawable/icon_muk"
+        android:alpha="0.8"/>
 
     <TextView
         android:id="@+id/store_title_TV"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/font1"
         android:gravity="center"
-        android:text="상점 - 오른쪽에 코인 넣기"
-        android:textSize="24sp"
+        android:text="객잔"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:shadowColor="#000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="2"/>
 
     <TextView
         android:id="@+id/text_inven"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="-55dp"
+        android:fontFamily="@font/font1"
         android:text="창고"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/store_recyclerview" />
+        app:layout_constraintTop_toBottomOf="@id/image_muk_inven" />
 
     <TextView
         android:id="@+id/text_store"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="-56dp"
+        android:fontFamily="@font/font1"
         android:text="상점"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/store_title_TV" />
+        app:layout_constraintTop_toBottomOf="@id/image_muk_store" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/inven_recyclerview"
-        android:layout_width="399dp"
-        android:layout_height="280dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginEnd="45dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_inven" />
+        app:layout_constraintTop_toBottomOf="@+id/image_muk_inven" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/store_recyclerview"
-        android:layout_width="399dp"
-        android:layout_height="280dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
+        android:layout_width="324dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginEnd="45dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_store">
+        app:layout_constraintTop_toBottomOf="@+id/image_muk_store">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -66,7 +135,8 @@
         android:id="@+id/spinner"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="60dp" />
+        tools:layout_editor_absoluteY="86dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
