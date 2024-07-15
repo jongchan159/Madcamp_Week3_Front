@@ -4,26 +4,26 @@ import com.google.gson.annotations.SerializedName
 
 data class Quest(
     @SerializedName("quest_id")
-    val questId: Int,
+    var questId: Int,
 
     @SerializedName("contents")
-    val contents: String,
+    var contents: String,
 
     @SerializedName("is_complete")
-    val isComplete: Boolean,
+    var isComplete: Boolean,
 
     @SerializedName("progress_time")
-    val progressTime: String?,
+    var progressTime: String?,
 
     @SerializedName("complete_time")
-    val completeTime: String?,
+    var completeTime: String?,
 
     @SerializedName("user")
-    val userId: Int?,
+    var userId: Int?,
 
     @SerializedName("type")
-    val type: String,
+    var type: String,
 
     @SerializedName("created_at")
-    val createdAt: String,
+    var createdAt: String,
 )
