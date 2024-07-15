@@ -14,9 +14,10 @@
         android:layout_width="386dp"
         android:layout_height="458dp"
         android:layout_marginTop="-93dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/paper"
-        tools:layout_editor_absoluteX="-6dp" />
+        app:srcCompat="@drawable/paper" />
 
     <TextView
         android:id="@+id/user_name"
