@@ -1,16 +1,11 @@
 package com.example.project3
 
 import android.content.Intent
-import android.media.Image
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -38,6 +33,7 @@ class GoogleloginActivity : AppCompatActivity() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
+            .requestId()  // ID 요청 추가
             .build()
 
         // GoogleSignInClient 초기화
@@ -64,6 +60,10 @@ class GoogleloginActivity : AppCompatActivity() {
 
             // 구글 로그인 성공 처리
             Toast.makeText(this, "구글 로그인 성공: ${account?.displayName}", Toast.LENGTH_SHORT).show()
+
+            // ID를 가져와서 사용
+            val id = account?.id
+            Log.d("GoogleSignIn", "ID: $id")
 
             // MainActivity로 이동
             val intent = Intent(this, MainActivity::class.java)
