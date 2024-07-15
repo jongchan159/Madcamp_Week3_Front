@@ -35,10 +35,10 @@ class RankingAdapter(
 
         // 배경 설정
         when (position + 1) {
-            1 -> holder.rankImageView.setImageResource(R.drawable.first)
-            2 -> holder.rankImageView.setImageResource(R.drawable.second)
-            3 -> holder.rankImageView.setImageResource(R.drawable.third)
-            else -> holder.rankImageView.setImageResource(R.drawable.etc)
+            1 -> holder.rankImageView.setImageResource(R.drawable.rankingback)
+            2 -> holder.rankImageView.setImageResource(R.drawable.rankingback)
+            3 -> holder.rankImageView.setImageResource(R.drawable.rankingback)
+            else -> holder.rankImageView.setImageResource(R.drawable.rankingback)
         }
 
         holder.itemView.setOnClickListener {
