@@ -96,7 +96,7 @@
         app:layout_constraintTop_toBottomOf="@+id/user_lv" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/text_item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -131,7 +131,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
-        android:text="홈"
+        android:text="영웅이 되는 길"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

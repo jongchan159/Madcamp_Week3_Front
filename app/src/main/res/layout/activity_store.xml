@@ -7,4 +7,66 @@
     android:layout_height="match_parent"
     tools:context=".Store.StoreActivity">
 
+    <TextView
+        android:id="@+id/store_title_TV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:text="상점 - 오른쪽에 코인 넣기"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_inven"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="30dp"
+        android:text="창고"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/store_recyclerview" />
+
+    <TextView
+        android:id="@+id/text_store"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="15dp"
+        android:text="상점"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/store_title_TV" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/inven_recyclerview"
+        android:layout_width="399dp"
+        android:layout_height="280dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_inven" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/store_recyclerview"
+        android:layout_width="399dp"
+        android:layout_height="280dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_store">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="60dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
