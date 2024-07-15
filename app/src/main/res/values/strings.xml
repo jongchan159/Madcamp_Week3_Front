@@ -8,4 +8,5 @@
     <string name="naver_client_name">영웅이 되는 길</string>
     <string name="YOUR_CALLBACK_SCHEME">http</string>
     <string name="YOUR_CALLBACK_HOST">172.10.7.121:80/api/naver/callback</string>
+    <string name="title_activity_splash">SplashActivity</string>
 </resources>

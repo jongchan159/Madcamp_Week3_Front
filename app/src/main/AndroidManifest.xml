@@ -17,15 +17,18 @@
         android:theme="@style/Theme.Project3"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <!-- 스플래시 스크린 액티비티 -->
         <activity
-            android:name=".GoogleloginActivity"
-            android:exported="true" >
-
+            android:name=".SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".GoogleloginActivity"
+            android:exported="false">
         </activity>
         <activity
             android:name=".DiaryGenActivity"
@@ -42,10 +45,6 @@
         <activity
             android:name=".DiaryActivity"
             android:exported="false" />
-        <activity
-            android:name=".LoginActivity"
-            android:exported="true">
-        </activity>
     </application>
 
 </manifest>
