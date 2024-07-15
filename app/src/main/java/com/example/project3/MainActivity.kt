@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         val userHeroTextView: TextView = findViewById(R.id.user_hero)
         val userLvTextView: TextView = findViewById(R.id.user_lv)
         val userTitleTextView: TextView = findViewById(R.id.user_title)
-        val userCoinTextView: TextView = findViewById(R.id.text_item_name)
+        val userCoinTextView: TextView = findViewById(R.id.text_coin)
         val progressBarExp: ProgressBar = findViewById(R.id.progressBar_exp)
 
         val userId = 1
