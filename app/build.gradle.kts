@@ -79,8 +79,4 @@ dependencies {
     implementation (libs.moshi.kotlin)
     implementation (libs.logging.interceptor.v421)
     implementation (libs.lottie)
-
-    implementation ("com.shobhitpuri.custombuttons:google-signin:1.0.0")
-
-
 }
