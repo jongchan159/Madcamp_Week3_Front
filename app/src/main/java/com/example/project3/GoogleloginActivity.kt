@@ -17,6 +17,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class GoogleloginActivity : AppCompatActivity() {
 
@@ -63,6 +66,17 @@ class GoogleloginActivity : AppCompatActivity() {
             val account = completedTask.getResult(ApiException::class.java)
 
             // 구글 로그인 성공 처리
+            val id = account?.id
+
+            // 사용자 ID 변수형 로그 출력
+            if (id != null) {
+                Log.d("GoogleSignIn", "User ID: $id")
+                Log.d("GoogleSignIn", "User ID Type: ${id::class.simpleName}")
+                sendIdToServer(id)
+            } else {
+                Log.d("GoogleSignIn", "User ID is null")
+            }
+
             Toast.makeText(this, "구글 로그인 성공: ${account?.displayName}", Toast.LENGTH_SHORT).show()
 
             // MainActivity로 이동
@@ -73,5 +87,24 @@ class GoogleloginActivity : AppCompatActivity() {
             Log.w("GoogleSignIn", "fail to login: ${e.message}")
             Toast.makeText(this, "구글 로그인 실패: ${e.message}", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun sendIdToServer(userId: String) {
+        val apiService = ApiClient.apiService
+        val idRequest = IdRequest(userId)
+
+        apiService.sendUserId(idRequest).enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    Log.d("GoogleSignIn", "User ID sent successfully")
+                } else {
+                    Log.e("GoogleSignIn", "Failed to send User ID: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Log.e("GoogleSignIn", "Error: ${t.message}")
+            }
+        })
     }
 }
