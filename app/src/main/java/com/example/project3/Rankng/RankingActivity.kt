@@ -24,10 +24,12 @@ class RankingActivity : AppCompatActivity(), RankingAdapter.OnItemClickListener 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ranking)
 
+        fetchUsersFromServer()
+
+        // 여기 패치 느리면 thread 붙여야 할 것 같다.
+
         rankingRecyclerView = findViewById(R.id.ranking_rank_RV)
         rankingRecyclerView.layoutManager = LinearLayoutManager(this)
-
-        fetchUsersFromServer()
     }
 
     private fun fetchUsersFromServer() {

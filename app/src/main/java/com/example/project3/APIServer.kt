@@ -3,6 +3,7 @@ package com.example.project3
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 
@@ -20,10 +21,17 @@ interface APIServer {
     @GET("quests/")
     fun getQuests(): Call<List<Quest>>
 
+    @GET("quests/{questId}/")
+    fun getQuestProgress(@Path("questId") questId: Int): Call<Quest>
+
+    @POST("generate_quests/")
+    fun updateAllUsersQuests(): Call<Void>
+
     @PUT("users/")  // 엔드포인트는 실제 API 경로로 변경
     fun updateUsers(@Body users: List<User>): Call<Void>
 
-
+    @PUT("quests/{questId}/")
+    fun updateQuestProgress(@Path("questId") questId: Int, @Body quest: Quest): Call<Void>
 }
 
 // server가 client한테 보내는 것
