@@ -3,9 +3,9 @@ package com.example.project3
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-const val SERVER_IP = "172.10.7.121"
+const val SERVER_IP = "10.0.2.2"
 object ApiClient {
-    private const val BASE_URL = "http://$SERVER_IP:80/api/"
+    private const val BASE_URL = "http://$SERVER_IP:8000/api/"
 
     val retrofit: Retrofit by lazy {
         Retrofit.Builder()

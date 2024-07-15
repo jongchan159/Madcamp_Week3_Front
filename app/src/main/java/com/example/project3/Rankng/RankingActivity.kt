@@ -24,10 +24,12 @@ class RankingActivity : AppCompatActivity(), RankingAdapter.OnItemClickListener 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ranking)
 
+        fetchUsersFromServer()
+
+        // 여기 패치 느리면 thread 붙여야 할 것 같다.
+
         rankingRecyclerView = findViewById(R.id.ranking_rank_RV)
         rankingRecyclerView.layoutManager = LinearLayoutManager(this)
-
-        fetchUsersFromServer()
     }
 
     private fun fetchUsersFromServer() {
@@ -35,6 +37,14 @@ class RankingActivity : AppCompatActivity(), RankingAdapter.OnItemClickListener 
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
                 if (response.isSuccessful && response.body() != null) {
                     val users = response.body()!!.sortedByDescending { it.level }
+
+                    // Update ranking based on sorted level
+                    for ((index, user) in users.withIndex()) {
+                        user.ranking = index + 1
+                    }
+
+                    // Send updated ranking to server
+                    updateRankingsOnServer(users)
 
                     val gson = Gson()
                     val jsonResponse = gson.toJson(response.body())
@@ -58,6 +68,22 @@ class RankingActivity : AppCompatActivity(), RankingAdapter.OnItemClickListener 
         })
     }
 
+    private fun updateRankingsOnServer(users: List<User>) {
+        ApiClient.apiService.updateUsers(users).enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    Toast.makeText(this@RankingActivity, "Rankings updated successfully", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this@RankingActivity, "Failed to update rankings", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Toast.makeText(this@RankingActivity, "Failed to connect to server", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
     override fun onItemClick(user: User) {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_ranking, null)
 
@@ -76,7 +102,7 @@ class RankingActivity : AppCompatActivity(), RankingAdapter.OnItemClickListener 
         titleTextView.text = "Title: ${user.title}"
         coinTextView.text = "Coin: ${user.coin}"
         ageTextView.text = "Age: ${user.age}"
-        ageTextView.text = "Ranking: ${user.ranking}"
+        rankingTextView.text = "Ranking: ${user.ranking}"
 
         val builder = AlertDialog.Builder(this)
         builder.setView(dialogView)
