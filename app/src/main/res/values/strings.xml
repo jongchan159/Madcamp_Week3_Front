@@ -4,5 +4,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="naver_client_id">XbN_mJydA0z65oMgQ_1t</string>
     <string name="naver_client_secret">algBhOxPy4</string>
-    <string name="naver_client_name">BEHERO</string>
+    <string name="naver_client_name">영웅이 되는 길</string>
+    <string name="YOUR_CALLBACK_SCHEME">http</string>
+    <string name="YOUR_CALLBACK_HOST">172.10.7.121:80/api/naver/callback</string>
 </resources>
