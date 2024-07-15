@@ -1,3 +1,5 @@
+import java.util.regex.Pattern.compile
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -77,6 +79,8 @@ dependencies {
     implementation (libs.moshi.kotlin)
     implementation (libs.logging.interceptor.v421)
     implementation (libs.lottie)
+
+    implementation ("com.shobhitpuri.custombuttons:google-signin:1.0.0")
 
 
 }
