@@ -1,9 +1,11 @@
 package com.example.project3
 
 import android.content.Intent
+import android.media.Image
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -19,7 +21,7 @@ import com.google.android.gms.tasks.Task
 class GoogleloginActivity : AppCompatActivity() {
 
     private lateinit var googleSignInClient: GoogleSignInClient
-    private lateinit var signInButton: Button
+    private lateinit var signInButton: ImageView
 
     private val RC_SIGN_IN = 1
 
@@ -27,7 +29,7 @@ class GoogleloginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_googlelogin)
 
-        signInButton = findViewById<Button>(R.id.sign_in_button)
+        signInButton = findViewById<ImageView>(R.id.sign_in_button)
         signInButton.setOnClickListener {
             signIn()
         }
