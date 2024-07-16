@@ -22,7 +22,7 @@
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".GoogleloginActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".GoogleloginActivity"
             android:exported="false">
         </activity>
         <activity

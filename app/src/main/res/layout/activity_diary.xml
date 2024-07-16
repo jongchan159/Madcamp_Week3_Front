@@ -38,7 +38,7 @@
             android:shadowDx="2"
             android:shadowDy="2"
             android:shadowRadius="2"
-            android:text="기록지"
+            android:text="정보소"
             android:textColor="@color/white"
             android:textSize="30sp"
             app:layout_constraintLeft_toLeftOf="parent"

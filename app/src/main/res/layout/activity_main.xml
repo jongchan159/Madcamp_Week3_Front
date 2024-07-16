@@ -221,7 +221,7 @@
         android:layout_marginStart="28dp"
         android:layout_marginTop="35dp"
         android:fontFamily="@font/font1"
-        android:text="의뢰소"
+        android:text="정보소"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/button_quest"
