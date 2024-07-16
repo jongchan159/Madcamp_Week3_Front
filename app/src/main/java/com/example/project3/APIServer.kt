@@ -68,9 +68,12 @@ interface APIServer {
     fun createReceipts(@Body receipt: Receipt): Call<Receipt>
 
     // 유저 id가 같은 모든 아이템 조회
-    @GET("receipts/{userId}")
+    @GET("receipts/{userId}/")
     fun getUserReceipts(@Path("userId") userId: String): Call<List<Receipt>>
 
+    // 모든 구매내역 조회
+    @GET("receipts/")
+    fun getAllReceipts(): Call<List<Receipt>>
 
 
 }
