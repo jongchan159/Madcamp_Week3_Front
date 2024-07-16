@@ -1,16 +1,11 @@
 package com.example.project3
 
 import android.content.Intent
-import android.media.Image
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -28,11 +23,16 @@ class GoogleloginActivity : AppCompatActivity() {
 
     private val RC_SIGN_IN = 1
 
+    data class UserResponse(
+        val success: Boolean,
+        val user: User?
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_googlelogin)
 
-        signInButton = findViewById<ImageView>(R.id.sign_in_button)
+        signInButton = findViewById(R.id.sign_in_button)
         signInButton.setOnClickListener {
             signIn()
         }
@@ -41,6 +41,7 @@ class GoogleloginActivity : AppCompatActivity() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
+            .requestId()  // ID 요청 추가
             .build()
 
         // GoogleSignInClient 초기화
@@ -66,44 +67,57 @@ class GoogleloginActivity : AppCompatActivity() {
             val account = completedTask.getResult(ApiException::class.java)
 
             // 구글 로그인 성공 처리
-            val id = account?.id
-
-            // 사용자 ID 변수형 로그 출력
-            if (id != null) {
-                Log.d("GoogleSignIn", "User ID: $id")
-                Log.d("GoogleSignIn", "User ID Type: ${id::class.simpleName}")
-                sendIdToServer(id)
-            } else {
-                Log.d("GoogleSignIn", "User ID is null")
-            }
-
             Toast.makeText(this, "구글 로그인 성공: ${account?.displayName}", Toast.LENGTH_SHORT).show()
 
-            // MainActivity로 이동
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            // ID를 가져와서 사용
+            val id = account?.id
+            Log.d("GoogleSignIn", "Google 로그인 성공 - ID: $id")
+
+            if (id != null) {
+                checkUserOnServer(id)
+            } else {
+                Log.e("GoogleSignIn", "Google 로그인 실패 - ID가 null입니다.")
+            }
         } catch (e: ApiException) {
             // 구글 로그인 실패 처리
-            Log.w("GoogleSignIn", "fail to login: ${e.message}")
+            Log.e("GoogleSignIn", "Google 로그인 실패: ${e.message}")
             Toast.makeText(this, "구글 로그인 실패: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun sendIdToServer(userId: String) {
-        val apiService = ApiClient.apiService
-        val idRequest = IdRequest(userId)
-
-        apiService.sendUserId(idRequest).enqueue(object : Callback<Void> {
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+    private fun checkUserOnServer(id: String) {
+        Log.d("GoogleSignIn", "서버에 사용자 정보 확인 요청 - ID: $id")
+        ApiClient.apiService.getUsers().enqueue(object : Callback<List<User>> {
+            override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
                 if (response.isSuccessful) {
-                    Log.d("GoogleSignIn", "User ID sent successfully")
+                    val users = response.body()
+                    Log.d("GoogleSignIn", "서버 응답 성공 - 사용자 목록: $users")
+
+                    val user = users?.find { it.userId.toString() == id }
+
+                    if (user != null) {
+                        Log.d("GoogleSignIn", "서버에서 사용자 정보 확인 - 유저 존재: $user")
+                        // 유저 정보가 존재하면 UserHolder에 설정
+                        UserHolder.setUser(user)
+                        // MainActivity로 이동
+                        val intent = Intent(this@GoogleloginActivity, MainActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        Log.d("GoogleSignIn", "서버에서 사용자 정보 확인 - 유저가 존재하지 않음")
+                        // 유저 정보가 없으면 RegisterActivity로 이동
+                        val intent = Intent(this@GoogleloginActivity, RegisterActivity::class.java)
+                        startActivity(intent)
+                    }
                 } else {
-                    Log.e("GoogleSignIn", "Failed to send User ID: ${response.errorBody()?.string()}")
+                    val errorBody = response.errorBody()?.string()
+                    Log.e("GoogleSignIn", "서버 응답 오류 - 에러 본문: $errorBody")
+                    Toast.makeText(this@GoogleloginActivity, "서버 에러", Toast.LENGTH_SHORT).show()
                 }
             }
 
-            override fun onFailure(call: Call<Void>, t: Throwable) {
-                Log.e("GoogleSignIn", "Error: ${t.message}")
+            override fun onFailure(call: Call<List<User>>, t: Throwable) {
+                Log.e("GoogleSignIn", "서버 요청 실패: ${t.message}")
+                Toast.makeText(this@GoogleloginActivity, "서버 요청 실패", Toast.LENGTH_SHORT).show()
             }
         })
     }

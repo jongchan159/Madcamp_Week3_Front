@@ -15,26 +15,29 @@ interface APIServer {
 
     // 구글 로그인 토큰 주기
     @Headers("Content-Type: application/json")
-    @POST("user_id/")
+    @POST("user_login/")
     fun sendUserId(@Body idRequest: IdRequest): Call<Void>
+
+    @GET("checkUser")
+    fun checkUser(@Query("id") id: String): Call<GoogleloginActivity.UserResponse>
 
     @GET("users/")
     fun getUsers(): Call<List<User>>
 
     @GET("users/{user_id}")
-    fun getUserById(@Path("user_id") id: Int): Call<User>
+    fun getUserById(@Path("user_id") id: String): Call<User>
 
     @GET("diaries/")
     fun getDiaries(): Call<List<Diary>>
 
     @GET("diaries/{user_id}")
-    fun getDiaryByUserId(@Query("user_id") id: Int): Call<Diary>
+    fun getDiaryByUserId(@Query("user_id") id: String): Call<Diary>
 
     @GET("quests/")
     fun getQuests(): Call<List<Quest>>
 
     @GET("quests/{user_id}")
-    fun getQuestByUserId(@Query("user_id") id: Int): Call<Quest>
+    fun getQuestByUserId(@Query("user_id") id: String): Call<Quest>
 
     @GET("quests/{questId}/")
     fun getQuestProgress(@Path("questId") questId: Int): Call<Quest>

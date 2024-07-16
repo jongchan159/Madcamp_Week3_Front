@@ -10,7 +10,7 @@ data class Diary(
     var contents: String,
 
     @SerializedName("user")
-    var userId: Int, // User id 받아오는 것 같다.
+    var userId: String, // User id 받아오는 것 같다.
 
     @SerializedName("created_at")
     var createdAt: String,

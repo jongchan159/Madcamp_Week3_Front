@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         val userCoinTextView: TextView = findViewById(R.id.text_coin)
         val progressBarExp: ProgressBar = findViewById(R.id.progressBar_exp)
 
-        val userId = 1
+        val userId = "1001010110111"
 
         // API을 사용하여 서버에서 데이터 가져오기
         val apiService = ApiClient.retrofit.create(APIServer::class.java)
