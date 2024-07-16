@@ -57,7 +57,7 @@ class DiaryActivity : AppCompatActivity() {
 
         btnCreateToDo = findViewById(R.id.diary_button1_BT)
         btnCreateToDo.setOnClickListener {
-            updateAllUsersQuests()
+            updateCurrentUserQuests()
         }
 
         // 다이어리 데이터 가져오기
@@ -288,17 +288,31 @@ class DiaryActivity : AppCompatActivity() {
         return hours * 3600 + minutes * 60 + seconds
     }
 
-    private fun updateAllUsersQuests() {
+    private fun updateCurrentUserQuests() {
         val progressDialog = ProgressDialog(this)
         progressDialog.setMessage("Updating quests...")
         progressDialog.setCancelable(false)
         progressDialog.show()
 
-        ApiClient.apiService.updateAllUsersQuests().enqueue(object : Callback<Void> {
+        val currentUser = UserHolder.getUser()
+        if (currentUser == null) {
+            progressDialog.dismiss()
+            Log.e("jangjiwon", "Current user is null")
+            return
+        }
+
+        val userId = currentUser.userId
+        if (userId.isNullOrBlank()) {
+            progressDialog.dismiss()
+            Log.e("jangjiwon", "Invalid user ID")
+            return
+        }
+
+        ApiClient.apiService.updateUserQuests(userId).enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 progressDialog.dismiss()
                 if (response.isSuccessful) {
-                    Log.d("DiaryActivity", "Successfully requested quest generation for all users")
+                    Log.d("DiaryActivity", "Successfully requested quest generation for user $userId")
                     fetchDiaries() // Fetch updated diaries
                     fetchQuests() // Fetch updated quests
                 } else {

@@ -47,6 +47,9 @@ interface APIServer {
     @POST("generate_quests/")
     fun updateAllUsersQuests(): Call<Void>
 
+    @POST("generate_quests/{userId}/")
+    fun updateUserQuests(@Path("userId") userId: String): Call<Void>
+
     @POST("users/")
     fun createUser(@Body user: User): Call<User>
 

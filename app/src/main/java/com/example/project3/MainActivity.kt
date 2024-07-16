@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         val gifImageView: GifImageView = findViewById(R.id.gifImageView)
 
         // 로컬 리소스에서 GIF 로드
-        val gifDrawable = GifDrawable(resources, (R.raw.default_char))
+        val gifDrawable = GifDrawable(resources, (R.raw.rabbit))
         gifImageView.setImageDrawable(gifDrawable)
 
         btnQuest.setOnClickListener {
