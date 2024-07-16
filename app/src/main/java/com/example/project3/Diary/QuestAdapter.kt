@@ -11,8 +11,6 @@ class QuestAdapter(private val quests: List<Quest>, private val onItemClick: (Qu
 
     class ViewHolder(view: View, onItemClick: (Quest) -> Unit, quests: List<Quest>) : RecyclerView.ViewHolder(view) {
         val contents: TextView = view.findViewById(R.id.quest_contents)
-        val isComplete: TextView = view.findViewById(R.id.quest_is_complete)
-        val type: TextView = view.findViewById(R.id.quest_type)
 
         init {
             view.setOnClickListener {
@@ -29,8 +27,6 @@ class QuestAdapter(private val quests: List<Quest>, private val onItemClick: (Qu
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val quest = quests[position]
         holder.contents.text = quest.contents
-        holder.isComplete.text = if (quest.isComplete) "완료" else "미완료"
-        holder.type.text = quest.type
     }
 
     override fun getItemCount() = quests.size

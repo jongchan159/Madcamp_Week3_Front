@@ -48,11 +48,15 @@ interface APIServer {
     @POST("users/")
     fun createUser(@Body user: User): Call<User>
 
+    @POST("diaries/")
+    fun createDiary(@Body diary: Diary): Call<Diary>
+
     @PUT("users/")  // 엔드포인트는 실제 API 경로로 변경
     fun updateUsers(@Body users: List<User>): Call<Void>
 
     @PUT("quests/{questId}/")
     fun updateQuestProgress(@Path("questId") questId: Int, @Body quest: Quest): Call<Void>
+
 }
 
 // server가 client한테 보내는 것

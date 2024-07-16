@@ -1,6 +1,6 @@
-// DiaryActivity.kt
 package com.example.project3
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -8,6 +8,7 @@ import android.os.Looper
 import android.util.Log
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -24,7 +25,12 @@ class DiaryActivity : AppCompatActivity() {
     private lateinit var questAdapter: QuestAdapter
     private lateinit var diaryRecyclerView: RecyclerView
     private lateinit var diaryAdapter: DiaryAdapter
-    private lateinit var btnCreateDiary: Button
+    private lateinit var btnCreateDiary: ImageView
+    private lateinit var btnCreateToDo: ImageView
+
+    companion object {
+        const val REQUEST_CODE_CREATE_DIARY = 1
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,23 +42,6 @@ class DiaryActivity : AppCompatActivity() {
             statusBarColor = android.graphics.Color.TRANSPARENT
         }
 
-        // 예제 User 객체 설정
-        val user = User(
-            userId = "1001010110111",
-            userName = "장지원",
-            heroName = "hero1",
-            level = 5,
-            title = "Novice",
-            coin = 100,
-            age = 25,
-            ranking = 1,
-            backgroundId = 101,
-            characterId = 202,
-        )
-
-        // UserHolder에 사용자 설정
-        UserHolder.setUser(user)
-
         // RecyclerView 설정
         questRecyclerView = findViewById(R.id.diary_list1_RV)
         questRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -62,10 +51,13 @@ class DiaryActivity : AppCompatActivity() {
         // 버튼 설정 및 클릭 이벤트 추가
         btnCreateDiary = findViewById(R.id.diary_button2_BT)
         btnCreateDiary.setOnClickListener {
-//            val intent = Intent(this, DiaryGenActivity::class.java)
-//            startActivity(intent)
-            updateAllUsersQuests()
+            val intent = Intent(this, DiaryGenActivity::class.java)
+            startActivityForResult(intent, REQUEST_CODE_CREATE_DIARY)
+        }
 
+        btnCreateToDo = findViewById(R.id.diary_button1_BT)
+        btnCreateToDo.setOnClickListener {
+            updateAllUsersQuests()
         }
 
         // 다이어리 데이터 가져오기
@@ -148,6 +140,14 @@ class DiaryActivity : AppCompatActivity() {
         })
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_CREATE_DIARY && resultCode == RESULT_OK) {
+            // 다이어리 데이터 갱신
+            fetchDiaries()
+        }
+    }
+
     private fun showDiaryDialog(diary: Diary) {
         val dialog = AlertDialog.Builder(this)
             .setTitle("Diary Details")
@@ -172,10 +172,10 @@ class DiaryActivity : AppCompatActivity() {
         Completion Status: ${if (quest.isComplete) "완료" else "미완료"}
     """.trimIndent()
 
-        val completeTimeInSeconds = 1800 // 30 minutes
-        val handler = Handler(Looper.getMainLooper())
-        var startTime = System.currentTimeMillis()
+        var startTime: Long = 0
         var isRunning = false
+        var elapsedTimeInSeconds: Int = 0
+        val completeTimeInSeconds = 1800 // 30 minutes
 
         fun updateProgressTimeOnServer(progressTime: Int) {
             quest.progressTime = progressTime.toString()
@@ -194,51 +194,57 @@ class DiaryActivity : AppCompatActivity() {
             })
         }
 
-        val updateProgressBar = object : Runnable {
+        val handler = Handler(Looper.getMainLooper())
+        val updateRunnable = object : Runnable {
             override fun run() {
-                if (!isRunning) return
+                if (isRunning) {
+                    val currentTime = System.currentTimeMillis()
+                    val timeDiff = (currentTime - startTime) / 1000
+                    elapsedTimeInSeconds = timeDiff.toInt()
 
-                val elapsedTime = (System.currentTimeMillis() - startTime) / 1000
-                progressBar.progress = elapsedTime.toInt()
+                    progressBar.progress = elapsedTimeInSeconds
+                    val remainingTimeInSeconds = completeTimeInSeconds - elapsedTimeInSeconds
+                    val minutes = remainingTimeInSeconds / 60
+                    val seconds = remainingTimeInSeconds % 60
+                    timeRemaining.text = String.format("Time Remaining: %02d:%02d", minutes, seconds)
 
-                val remainingTime = completeTimeInSeconds - elapsedTime
-                val minutes = remainingTime / 60
-                val seconds = remainingTime % 60
-                timeRemaining.text = String.format("Time Remaining: %02d:%02d", minutes, seconds)
+                    if (elapsedTimeInSeconds >= completeTimeInSeconds) {
+                        quest.isComplete = true
+                        questDetails.text = questDetails.text.toString() + "\nCompletion Time: ${quest.completeTime}"
+                        progressBar.progress = progressBar.max
+                        isRunning = false
+                        updateProgressTimeOnServer(completeTimeInSeconds)
+                    }
 
-                if (elapsedTime < completeTimeInSeconds) {
                     handler.postDelayed(this, 1000)
-                } else {
-                    quest.isComplete = true
-                    questDetails.text = questDetails.text.toString() + "\nCompletion Time: ${quest.completeTime}"
-                    progressBar.progress = progressBar.max
-                    isRunning = false
-                    updateProgressTimeOnServer(progressBar.max)
                 }
-
-                updateProgressTimeOnServer(elapsedTime.toInt())
             }
         }
 
         startButton.setOnClickListener {
             if (!isRunning) {
-                startTime = System.currentTimeMillis() - (progressBar.progress * 1000)
                 isRunning = true
-                handler.post(updateProgressBar)
+                startTime = System.currentTimeMillis() - (elapsedTimeInSeconds * 1000).toLong()
+                handler.post(updateRunnable)
             }
         }
 
         stopButton.setOnClickListener {
-            isRunning = false
-            updateProgressTimeOnServer(progressBar.progress)
+            if (isRunning) {
+                isRunning = false
+                handler.removeCallbacks(updateRunnable)
+                updateProgressTimeOnServer(elapsedTimeInSeconds)
+            }
         }
 
         val dialog = AlertDialog.Builder(this)
             .setTitle("Quest Details")
             .setView(dialogView)
             .setPositiveButton("OK") { _, _ ->
-                isRunning = false
-                updateProgressTimeOnServer(progressBar.progress)
+                if (isRunning) {
+                    handler.removeCallbacks(updateRunnable)
+                    updateProgressTimeOnServer(elapsedTimeInSeconds)
+                }
             }
             .create()
 
@@ -247,8 +253,11 @@ class DiaryActivity : AppCompatActivity() {
             override fun onResponse(call: Call<Quest>, response: Response<Quest>) {
                 if (response.isSuccessful && response.body() != null) {
                     val fetchedQuest = response.body()!!
-                    progressBar.progress = fetchedQuest.progressTime?.toInt() ?: 0
-                    startTime = System.currentTimeMillis() - (progressBar.progress * 1000)
+                    // Convert progress time from HH:mm:ss to total seconds
+                    val progressTime = calculateTotalSecondsFromString(fetchedQuest.progressTime ?: "00:00:00")
+                    progressBar.progress = progressTime
+                    elapsedTimeInSeconds = progressTime
+                    startTime = System.currentTimeMillis() - (elapsedTimeInSeconds * 1000).toLong()
                     if (progressBar.progress >= completeTimeInSeconds) {
                         quest.isComplete = true
                         questDetails.text = questDetails.text.toString() + "\nCompletion Time: ${quest.completeTime}"
@@ -267,17 +276,38 @@ class DiaryActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    // Function to calculate total seconds from HH:mm:ss formatted string
+    private fun calculateTotalSecondsFromString(timeString: String): Int {
+        val parts = timeString.split(":")
+        if (parts.size != 3) return 0
+
+        val hours = parts[0].toIntOrNull() ?: 0
+        val minutes = parts[1].toIntOrNull() ?: 0
+        val seconds = parts[2].toIntOrNull() ?: 0
+
+        return hours * 3600 + minutes * 60 + seconds
+    }
+
     private fun updateAllUsersQuests() {
+        val progressDialog = ProgressDialog(this)
+        progressDialog.setMessage("Updating quests...")
+        progressDialog.setCancelable(false)
+        progressDialog.show()
+
         ApiClient.apiService.updateAllUsersQuests().enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                progressDialog.dismiss()
                 if (response.isSuccessful) {
                     Log.d("DiaryActivity", "Successfully requested quest generation for all users")
+                    fetchDiaries() // Fetch updated diaries
+                    fetchQuests() // Fetch updated quests
                 } else {
                     Log.e("DiaryActivity", "Failed to request quest generation: ${response.code()} - ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<Void>, t: Throwable) {
+                progressDialog.dismiss()
                 Log.e("DiaryActivity", "Request to generate quests failed", t)
             }
         })
