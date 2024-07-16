@@ -7,6 +7,7 @@ import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 data class IdRequest(val idToken: String)
 
@@ -17,7 +18,6 @@ interface APIServer {
     @POST("user_id/")
     fun sendUserId(@Body idRequest: IdRequest): Call<Void>
 
-
     @GET("users/")
     fun getUsers(): Call<List<User>>
 
@@ -27,8 +27,14 @@ interface APIServer {
     @GET("diaries/")
     fun getDiaries(): Call<List<Diary>>
 
+    @GET("diaries/{user_id}")
+    fun getDiaryByUserId(@Query("user_id") id: Int): Call<Diary>
+
     @GET("quests/")
     fun getQuests(): Call<List<Quest>>
+
+    @GET("quests/{user_id}")
+    fun getQuestByUserId(@Query("user_id") id: Int): Call<Quest>
 
     @GET("quests/{questId}/")
     fun getQuestProgress(@Path("questId") questId: Int): Call<Quest>
