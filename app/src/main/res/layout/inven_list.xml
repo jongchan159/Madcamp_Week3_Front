@@ -7,25 +7,37 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/inven_image"
+        android:layout_width="160dp"
+        android:layout_height="167dp"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
     <TextView
         android:id="@+id/text_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="아이템 이름"
+        android:fontFamily="@font/font1"
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/text_have"
+        android:id="@+id/text_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="보유중"
+        android:text="가격"
+        android:fontFamily="@font/font1"
         android:textSize="16sp" />
 
-    <ImageView
-        android:id="@+id/inven_image"
-        android:layout_width="164dp"
-        android:layout_height="match_parent"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+    <Button
+        android:id="@+id/button_equip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/font1"
+        android:text="착용하기"
+        android:textColor="#000000"
+        android:textSize="12sp" />
 </LinearLayout>

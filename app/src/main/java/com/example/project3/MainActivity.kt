@@ -10,8 +10,9 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
-import com.example.project3.Store.StoreActivity
 import com.google.gson.Gson
+import pl.droidsonroids.gif.GifDrawable
+import pl.droidsonroids.gif.GifImageView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,12 +29,17 @@ class MainActivity : AppCompatActivity() {
         val btnRanking = findViewById<ImageView>(R.id.button_ranking)
 
         // 상단 바를 투명하게 설정
-        // 상단 바를 투명하게 설정
         WindowCompat.setDecorFitsSystemWindows(window, false)
         window.apply {
             addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             statusBarColor = android.graphics.Color.TRANSPARENT
         }
+
+        val gifImageView: GifImageView = findViewById(R.id.gifImageView)
+
+        // 로컬 리소스에서 GIF 로드
+        val gifDrawable = GifDrawable(resources, (R.raw.default_char))
+        gifImageView.setImageDrawable(gifDrawable)
 
         btnQuest.setOnClickListener {
             val intent = Intent(this, DiaryActivity::class.java)
