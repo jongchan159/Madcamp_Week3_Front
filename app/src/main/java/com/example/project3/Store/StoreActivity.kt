@@ -19,11 +19,11 @@ class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener, I
     private lateinit var storeAdapter: StoreAdapter
     private lateinit var invenAdapter: InvenAdapter
     private lateinit var apiServer: APIServer
-    private val sellItemList = mutableListOf<Item>()
-    private val storeList = mutableListOf<Item>()
-    private val invenList = mutableListOf<Item>()
-    private val purchasedItemIds = mutableSetOf<Int>()
-    private var equippedItemId: Int? = null
+    private val sellItemList = mutableListOf<Item>() // 전체 아이템 리스트
+    private val storeList = mutableListOf<Item>() // 판매리스트
+    private val invenList = mutableListOf<Item>() // 보유리스트
+    private val purchasedItemIds = mutableSetOf<Int>() // 보유 아이템 아이디 리스트
+    private var equippedItemId: Int? = null // 착용 아이템 아이디
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,27 +66,29 @@ class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener, I
     }
 
     private fun loadReceipts() {
-        val userId = getUserId().toString()
-        apiServer.getUserReceipts(userId).enqueue(object : Callback<List<Receipt>> {
+        apiServer.getAllReceipts().enqueue(object : Callback<List<Receipt>> {
             override fun onResponse(call: Call<List<Receipt>>, response: Response<List<Receipt>>) {
                 if (response.isSuccessful) {
                     response.body()?.let { receipts ->
+                        val userId = getUserId().toString()
+                        val userReceipts = receipts.filter { it.user == userId }
                         purchasedItemIds.clear()
-                        purchasedItemIds.addAll(receipts.map { it.item })
+                        purchasedItemIds.addAll(userReceipts.map { it.item })
                         invenList.clear()
                         invenList.addAll(sellItemList.filter { it.item_id in purchasedItemIds })
                         updateItemLists()
                     }
                 } else {
-                    showError("Failed to load receipts")
+                    showError("Failed to load receipts1")
                 }
             }
 
             override fun onFailure(call: Call<List<Receipt>>, t: Throwable) {
-                showError("Failed to load receipts: ${t.message}")
+                showError("Failed to load receipts2: ${t.message}")
             }
         })
     }
+
 
     private fun updateItemLists() {
         storeList.clear()
@@ -95,9 +97,9 @@ class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener, I
         invenAdapter.notifyDataSetChanged()
     }
 
-    private fun getUserId(): Int {
-        // 실제 유저 ID를 가져오는 로직으로 대체
-        return 1
+    private fun getUserId(): String? {
+        val returnId = UserHolder.getUser()?.userId
+        return returnId
     }
 
     override fun onButtonClick(item: Item) {
@@ -105,7 +107,7 @@ class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener, I
     }
 
     private fun purchaseItem(item: Item) {
-        val receipt = Receipt(receiptId = 0, user = getUserId().toString(), item = item.item_id)
+        val receipt = Receipt(user = getUserId().toString(), item = item.item_id)
         apiServer.createReceipts(receipt).enqueue(object : Callback<Receipt> {
             override fun onResponse(call: Call<Receipt>, response: Response<Receipt>) {
                 if (response.isSuccessful) {
