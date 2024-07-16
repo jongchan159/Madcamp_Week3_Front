@@ -1,5 +1,7 @@
 package com.example.project3
 
+import com.example.project3.Class.Item
+import com.example.project3.Class.Receipt
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -53,6 +55,20 @@ interface APIServer {
 
     @PUT("quests/{questId}/")
     fun updateQuestProgress(@Path("questId") questId: Int, @Body quest: Quest): Call<Void>
+
+    // 아이템 관련
+    @GET("items/")
+    fun getItems(): Call<List<Item>>
+
+    // 아이템 구매
+    @POST("receipts/")
+    fun createReceipts(@Body receipt: Receipt): Call<Receipt>
+
+    // 유저 id가 같은 모든 아이템 조회
+    @GET("receipts/{userId}")
+    fun getUserReceipts(@Path("userId") userId: String): Call<List<Receipt>>
+
+
 }
 
 // server가 client한테 보내는 것

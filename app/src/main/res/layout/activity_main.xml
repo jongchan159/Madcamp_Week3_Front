@@ -5,9 +5,20 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/mainimage"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@drawable/mainimage">
+    android:padding="16dp">
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifImageView"
+        android:layout_width="150dp"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.472"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/paper"
@@ -26,12 +37,12 @@
         android:layout_width="150dp"
         android:layout_height="90dp"
         android:layout_marginTop="-23dp"
+        android:alpha="0.9"
         android:src="@drawable/muk"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        android:alpha="0.9"/>
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/user_name"
@@ -93,9 +104,9 @@
         android:layout_height="100dp"
         android:layout_marginTop="-150dp"
         android:layout_marginEnd="10dp"
+        android:alpha="0.8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/paper"
-        android:alpha="0.8"
         app:srcCompat="@drawable/icon_muk" />
 
     <ImageView
@@ -104,9 +115,9 @@
         android:layout_height="100dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="-150dp"
+        android:alpha="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/paper"
-        android:alpha="0.8"
         app:srcCompat="@drawable/icon_muk" />
 
     <ImageView
@@ -114,10 +125,10 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="-150dp"
+        android:alpha="0.8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/paper"
-        android:alpha="0.8"
         app:srcCompat="@drawable/icon_muk" />
 
     <ProgressBar
@@ -137,13 +148,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:fontFamily="@font/font1"
-        android:text="00000"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
         android:shadowColor="#000000"
         android:shadowDx="2"
         android:shadowDy="2"
         android:shadowRadius="2"
+        android:text="00000"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/imageCoin"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -152,12 +163,12 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginEnd="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:shadowColor="#000000"
         android:shadowDx="2"
         android:shadowDy="2"
         android:shadowRadius="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/coin" />
 
     <TextView

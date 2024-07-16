@@ -9,14 +9,14 @@ import pl.droidsonroids.gif.GifDrawable
 import pl.droidsonroids.gif.GifImageView
 
 class test : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
+/*    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test)
 
         val gifImageView: GifImageView = findViewById(R.id.gifImageView)
 
         // 로컬 리소스에서 GIF 로드
-        val gifDrawable = GifDrawable(resources, R.raw.rabbit)
+        val gifDrawable = GifDrawable(resources, R.raw.musa)
         gifImageView.setImageDrawable(gifDrawable)
-    }
+    }*/
 }
