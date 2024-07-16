@@ -30,7 +30,7 @@ class DiaryActivity : AppCompatActivity() {
 
         // 예제 User 객체 설정
         val user = User(
-            userId = 1,
+            userId = "1001010110111",
             userName = "장지원",
             heroName = "hero1",
             level = 5,
@@ -39,7 +39,7 @@ class DiaryActivity : AppCompatActivity() {
             age = 25,
             ranking = 1,
             backgroundId = 101,
-            characterId = 202
+            characterId = 202,
         )
 
         // UserHolder에 사용자 설정
@@ -72,6 +72,12 @@ class DiaryActivity : AppCompatActivity() {
             return
         }
 
+        val currentUserId = currentUser.userId
+        if (currentUserId == null) {
+            Log.e("jangjiwon", "Current user ID is not a valid integer")
+            return
+        }
+
         ApiClient.apiService.getDiaries().enqueue(object : Callback<List<Diary>> {
             override fun onResponse(call: Call<List<Diary>>, response: Response<List<Diary>>) {
                 if (response.isSuccessful && response.body() != null) {
@@ -79,8 +85,8 @@ class DiaryActivity : AppCompatActivity() {
                     Log.d("jangjiwon", "Fetched ${allDiaries.size} diaries")
 
                     val userDiaries = allDiaries.filter {
-                        Log.d("jangjiwon", "Diary UserId: ${it.userId}, Current UserId: ${currentUser.userId}")
-                        it.userId == currentUser.userId
+                        Log.d("jangjiwon", "Diary UserId: ${it.userId}, Current UserId: $currentUserId")
+                        it.userId == currentUserId
                     }
                     diaryAdapter = DiaryAdapter(userDiaries) { diary ->
                         showDiaryDialog(diary)
@@ -88,6 +94,7 @@ class DiaryActivity : AppCompatActivity() {
                     diaryRecyclerView.adapter = diaryAdapter
                 } else {
                     Log.e("jangjiwon", "Response not successful: ${response.code()} - ${response.message()}")
+                    Log.e("jangjiwon", "Response body: ${response.errorBody()?.string()}")
                 }
             }
 

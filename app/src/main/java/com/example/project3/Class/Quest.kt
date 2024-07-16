@@ -19,7 +19,7 @@ data class Quest(
     var completeTime: String?,
 
     @SerializedName("user")
-    var userId: Int?,
+    var userId: String?,
 
     @SerializedName("type")
     var type: String,
