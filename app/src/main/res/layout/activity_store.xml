@@ -57,11 +57,12 @@
         android:layout_width="100dp"
         android:layout_height="80dp"
         android:layout_marginStart="10dp"
-        android:layout_marginBottom="250dp"
+        android:layout_marginBottom="200dp"
         android:alpha="0.8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/icon_muk" />
+        app:srcCompat="@drawable/icon_muk"
+        />
 
     <TextView
         android:id="@+id/store_title_TV"
@@ -127,7 +128,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_muk_store">
+        app:layout_constraintTop_toBottomOf="@+id/image_muk_store"
+        >
 
     </androidx.recyclerview.widget.RecyclerView>
 

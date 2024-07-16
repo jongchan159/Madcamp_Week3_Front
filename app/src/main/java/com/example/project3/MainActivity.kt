@@ -3,10 +3,13 @@ package com.example.project3
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowInsetsController
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import com.example.project3.Store.StoreActivity
 import com.google.gson.Gson
 import retrofit2.Call
@@ -23,6 +26,14 @@ class MainActivity : AppCompatActivity() {
         val btnQuest = findViewById<ImageView>(R.id.button_quest)
         val btnStore = findViewById<ImageView>(R.id.button_store)
         val btnRanking = findViewById<ImageView>(R.id.button_ranking)
+
+        // 상단 바를 투명하게 설정
+        // 상단 바를 투명하게 설정
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        window.apply {
+            addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            statusBarColor = android.graphics.Color.TRANSPARENT
+        }
 
         btnQuest.setOnClickListener {
             val intent = Intent(this, DiaryActivity::class.java)

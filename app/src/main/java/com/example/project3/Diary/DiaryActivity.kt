@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
@@ -27,6 +29,12 @@ class DiaryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_diary)
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        window.apply {
+            addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            statusBarColor = android.graphics.Color.TRANSPARENT
+        }
 
         // 예제 User 객체 설정
         val user = User(
@@ -121,7 +129,11 @@ class DiaryActivity : AppCompatActivity() {
                         Log.d("jangjiwon", "Quest UserId: ${it.userId}, Current UserId: ${currentUser.userId}")
                         it.userId == currentUser.userId
                     }
-                    questAdapter = QuestAdapter(userQuests) { quest ->
+
+                    // 최신 세 개의 퀘스트만 가져오기
+                    val topThreeQuests = userQuests.takeLast(3)
+
+                    questAdapter = QuestAdapter(topThreeQuests) { quest ->
                         showQuestDialog(quest)
                     }
                     questRecyclerView.adapter = questAdapter

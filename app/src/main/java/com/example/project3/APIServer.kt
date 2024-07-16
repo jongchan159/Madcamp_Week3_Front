@@ -45,6 +45,9 @@ interface APIServer {
     @POST("generate_quests/")
     fun updateAllUsersQuests(): Call<Void>
 
+    @POST("users/")
+    fun createUser(@Body user: User): Call<User>
+
     @PUT("users/")  // 엔드포인트는 실제 API 경로로 변경
     fun updateUsers(@Body users: List<User>): Call<Void>
 

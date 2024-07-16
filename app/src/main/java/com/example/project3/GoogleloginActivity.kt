@@ -3,9 +3,11 @@ package com.example.project3
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -35,6 +37,12 @@ class GoogleloginActivity : AppCompatActivity() {
         signInButton = findViewById(R.id.sign_in_button)
         signInButton.setOnClickListener {
             signIn()
+        }
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        window.apply {
+            addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            statusBarColor = android.graphics.Color.TRANSPARENT
         }
 
         // GoogleSignInOptions 설정
@@ -105,7 +113,11 @@ class GoogleloginActivity : AppCompatActivity() {
                     } else {
                         Log.d("GoogleSignIn", "서버에서 사용자 정보 확인 - 유저가 존재하지 않음")
                         // 유저 정보가 없으면 RegisterActivity로 이동
-                        val intent = Intent(this@GoogleloginActivity, RegisterActivity::class.java)
+                        val newUser = User(userId = id) // User 객체에 userId 설정
+                        UserHolder.setUser(newUser)
+                        val intent = Intent(this@GoogleloginActivity, RegisterActivity::class.java).apply {
+                            putExtra("USER_ID", id) // 인텐트에 userId 추가
+                        }
                         startActivity(intent)
                     }
                 } else {
