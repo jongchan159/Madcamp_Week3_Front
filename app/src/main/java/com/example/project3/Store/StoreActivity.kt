@@ -1,8 +1,11 @@
 package com.example.project3
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -29,6 +32,7 @@ class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener, I
     private val purchasedItemIds = mutableSetOf<Int>() // 보유 아이템 아이디 리스트
     private var equippedItemId: Int? = null // 착용 아이템 아이디
     private lateinit var userCoinTextView: TextView // 코인 텍스트 뷰
+    private lateinit var btnCreateClose: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +63,12 @@ class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener, I
         loadUserData()
         loadItems()
         loadReceipts()
+
+        btnCreateClose = findViewById(R.id.diary_button3_BT)
+        btnCreateClose.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun loadUserData() {

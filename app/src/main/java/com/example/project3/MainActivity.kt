@@ -161,7 +161,7 @@ class MainActivity : AppCompatActivity() {
         val dialogOkButton: Button = dialogView.findViewById(R.id.dialog_ok_button)
 
         dialogTitle.text = "레벨 업"
-        dialogMessage.text = "축하드립니다! 당신의 영웅은 $newLevel 레벨에 도달했습니다. 당신은 100금화를 획득합니다!"
+        dialogMessage.text = "축하드립니다! 당신의 영웅은 $newLevel 레벨에 도달했습니다. \n당신은 100금화를 획득합니다!"
 
         dialogOkButton.setOnClickListener {
             dialog.dismiss()

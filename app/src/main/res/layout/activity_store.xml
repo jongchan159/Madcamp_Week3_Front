@@ -8,6 +8,30 @@
     tools:context=".Store.StoreActivity"
     android:background="@drawable/background_store">
 
+    <ImageView
+        android:id="@+id/diary_button3_BT"
+        android:layout_width="100dp"
+        android:layout_height="90dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/icon_muk"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_button_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="-69dp"
+        android:layout_marginBottom="-55dp"
+        android:fontFamily="@font/font1"
+        android:text="닫기"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/diary_button3_BT"
+        app:layout_constraintStart_toEndOf="@+id/diary_button3_BT" />
+
     <TextView
         android:id="@+id/text_coin"
         android:layout_width="wrap_content"
@@ -87,7 +111,7 @@
         android:layout_width="100dp"
         android:layout_height="80dp"
         android:layout_marginStart="10dp"
-        android:layout_marginBottom="200dp"
+        android:layout_marginBottom="300dp"
         android:alpha="0.8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
