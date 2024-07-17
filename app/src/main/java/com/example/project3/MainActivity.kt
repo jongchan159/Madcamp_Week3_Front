@@ -1,9 +1,12 @@
 package com.example.project3
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -142,24 +145,40 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showLevelUpDialog(newLevel: Int) {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Level Up!")
-        builder.setMessage("Congratulations! You have reached level $newLevel. You have earned 100 coins!")
-        builder.setPositiveButton("OK") { dialog, _ ->
+        val dialog = Dialog(this)
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_level, null)
+        dialog.setContentView(dialogView)
+
+        val dialogTitle: TextView = dialogView.findViewById(R.id.dialog_title)
+        val dialogMessage: TextView = dialogView.findViewById(R.id.dialog_message)
+        val dialogOkButton: Button = dialogView.findViewById(R.id.dialog_ok_button)
+
+        dialogTitle.text = "Level Up!"
+        dialogMessage.text = "Congratulations! You have reached level $newLevel. You have earned 100 coins!"
+
+        dialogOkButton.setOnClickListener {
             dialog.dismiss()
         }
-        val dialog = builder.create()
+
         dialog.show()
     }
 
     private fun showTitleUpDialog(newTitle: String) {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Title Up!")
-        builder.setMessage("Congratulations! You have earned the title: $newTitle!")
-        builder.setPositiveButton("OK") { dialog, _ ->
+        val dialog = Dialog(this)
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_title, null)
+        dialog.setContentView(dialogView)
+
+        val dialogTitle: TextView = dialogView.findViewById(R.id.dialog_title)
+        val dialogMessage: TextView = dialogView.findViewById(R.id.dialog_message)
+        val dialogOkButton: Button = dialogView.findViewById(R.id.dialog_ok_button)
+
+        dialogTitle.text = "Title Up!"
+        dialogMessage.text = "Congratulations! You have earned the title: $newTitle!"
+
+        dialogOkButton.setOnClickListener {
             dialog.dismiss()
         }
-        val dialog = builder.create()
+
         dialog.show()
     }
 

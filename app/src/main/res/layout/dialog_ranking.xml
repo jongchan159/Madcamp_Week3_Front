@@ -2,57 +2,91 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/white">
+    android:layout_margin="20dp"
+    android:background="@drawable/diary_back">
 
     <TextView
         android:id="@+id/Ranking_dialog_userNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/font1"
+        android:textSize="20dp"
         android:text="Name:" />
 
     <TextView
         android:id="@+id/Ranking_dialog_heroNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/font1"
+        android:textSize="20dp"
         android:text="Hero Name:" />
 
     <TextView
         android:id="@+id/Ranking_dialog_levelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/font1"
+        android:textSize="20dp"
         android:text="Level:" />
 
     <TextView
         android:id="@+id/Ranking_dialog_titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/font1"
+        android:textSize="20dp"
         android:text="Title:" />
 
     <TextView
         android:id="@+id/Ranking_dialog_coinTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/font1"
+        android:textSize="20dp"
         android:text="Coin:" />
 
     <TextView
         android:id="@+id/Ranking_dialog_ageTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/font1"
+        android:textSize="20dp"
         android:text="Age:" />
 
     <TextView
         android:id="@+id/Ranking_dialog_rankingTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/font1"
+        android:textSize="20dp"
         android:text="Ranking:" />
 
-    <Button
-        android:id="@+id/Ranking_dialog_okButton"
+
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="OK" />
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/image_btn_start"
+            android:layout_width="138dp"
+            android:layout_height="140dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="20dp"
+            app:srcCompat="@drawable/icon_muk" />
+
+        <Button
+            android:id="@+id/Ranking_dialog_okButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/font1"
+            android:textSize="20dp"
+            android:text="닫기" />
+    </FrameLayout>
 
 </LinearLayout>
