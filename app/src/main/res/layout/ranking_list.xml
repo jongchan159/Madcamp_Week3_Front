@@ -36,15 +36,15 @@
         android:layout_marginLeft="10dp"
         android:fontFamily="@font/font1"
         android:text="~의 경지"
-        android:textSize="18sp" />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/RankingList_name_TV"
-        android:layout_marginLeft="10dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:layout_weight="1"
+        android:fontFamily="@font/font1"
         android:text="Name"
-        android:textSize="18sp"
-        android:fontFamily="@font/font1"/>
+        android:textSize="20sp" />
 </LinearLayout>
