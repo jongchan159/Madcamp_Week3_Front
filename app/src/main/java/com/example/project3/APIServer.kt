@@ -12,6 +12,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 data class IdRequest(val idToken: String)
+data class UpdateCoinRequest(val userId: String, val amount: Int)
 
 interface APIServer {
 
@@ -70,9 +71,6 @@ interface APIServer {
     @POST("receipts/")
     fun createReceipts(@Body receipt: Receipt): Call<Receipt>
 
-    // 유저 id가 같은 모든 아이템 조회
-    @GET("receipts/{userId}/")
-    fun getUserReceipts(@Path("userId") userId: String): Call<List<Receipt>>
 
     // 모든 구매내역 조회
     @GET("receipts/")
@@ -81,6 +79,10 @@ interface APIServer {
     //경험치 업뎃
     @PUT("users/{userId}/")
     fun updateUser(@Path("userId") userId: String, @Body user: User): Call<User>
+    // 코인 업데이트 엔드포인트
+
+    @PUT("users/{user_id}/update_coin")
+    fun updateCoin(@Path("user_id") userId: String, @Body request: UpdateCoinRequest): Call<Void>
 }
 
 // server가 client한테 보내는 것

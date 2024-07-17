@@ -22,7 +22,7 @@ class StoreAdapter(
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textName: TextView = view.findViewById(R.id.text_name)
+        val textName: TextView = view.findViewById(R.id.text_nickname)
         val textPrice: TextView = view.findViewById(R.id.text_price)
         val storeImage: GifImageView = view.findViewById(R.id.store_image)
         val button: Button = view.findViewById(R.id.button_buy)

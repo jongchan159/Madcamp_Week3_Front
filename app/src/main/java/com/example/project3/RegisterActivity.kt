@@ -54,7 +54,7 @@ class RegisterActivity : AppCompatActivity() {
                     coin = 0,
                     ranking = 0,
                     backgroundId = null,
-                    characterId = null
+                    characterName = "default_char"
                 )
 
                 // 사용자 정보 업데이트

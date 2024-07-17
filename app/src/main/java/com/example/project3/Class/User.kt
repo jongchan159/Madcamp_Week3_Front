@@ -31,6 +31,5 @@ data class User(
     var backgroundId: Int? = null,
 
     @SerializedName("character_id")
-    var characterId: Int? = null,
-
+    var characterName: String = "default_char",
 )

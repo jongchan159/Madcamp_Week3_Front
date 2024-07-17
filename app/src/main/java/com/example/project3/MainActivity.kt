@@ -3,21 +3,29 @@ package com.example.project3
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.WindowInsetsController
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import com.bumptech.glide.Glide
 import com.google.gson.Gson
-import pl.droidsonroids.gif.GifDrawable
 import pl.droidsonroids.gif.GifImageView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var userId: String
+    private lateinit var gifImageView: GifImageView
+    private lateinit var userNameTextView: TextView
+    private lateinit var userHeroTextView: TextView
+    private lateinit var userLvTextView: TextView
+    private lateinit var userTitleTextView: TextView
+    private lateinit var userCoinTextView: TextView
+    private lateinit var progressBarExp: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,18 +36,15 @@ class MainActivity : AppCompatActivity() {
         val btnStore = findViewById<ImageView>(R.id.button_store)
         val btnRanking = findViewById<ImageView>(R.id.button_ranking)
 
+        // user id
+        userId = UserHolder.getUser()?.userId.toString()
+
         // 상단 바를 투명하게 설정
         WindowCompat.setDecorFitsSystemWindows(window, false)
         window.apply {
             addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             statusBarColor = android.graphics.Color.TRANSPARENT
         }
-
-        val gifImageView: GifImageView = findViewById(R.id.gifImageView)
-
-        // 로컬 리소스에서 GIF 로드
-        val gifDrawable = GifDrawable(resources, (R.raw.rabbit))
-        gifImageView.setImageDrawable(gifDrawable)
 
         btnQuest.setOnClickListener {
             val intent = Intent(this, DiaryActivity::class.java)
@@ -56,52 +61,36 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // profile text setting
-/*        // 테스트용 유저
-        val json = """
-        {
-            "user_name": "송종찬",
-            "hero_name": "토니 스타크",
-            "exp": 7550,
-            "title": "현경",
-            "coin": 1500,
-            "age": 25,
-            "background_id": 1,
-            "character_id": 1001
-        }
-        """
-        // JSON 데이터 파싱
-        val user = parseUserJson(json)*/
-
         // UI 요소 초기화
-        val userNameTextView: TextView = findViewById(R.id.user_name)
-        val userHeroTextView: TextView = findViewById(R.id.user_hero)
-        val userLvTextView: TextView = findViewById(R.id.user_lv)
-        val userTitleTextView: TextView = findViewById(R.id.user_title)
-        val userCoinTextView: TextView = findViewById(R.id.text_coin)
-        val progressBarExp: ProgressBar = findViewById(R.id.progressBar_exp)
+        userNameTextView = findViewById(R.id.user_name)
+        userHeroTextView = findViewById(R.id.user_hero)
+        userLvTextView = findViewById(R.id.user_lv)
+        userTitleTextView = findViewById(R.id.user_title)
+        userCoinTextView = findViewById(R.id.text_coin)
+        progressBarExp = findViewById(R.id.progressBar_exp)
+        gifImageView = findViewById(R.id.gifImageView)
 
-        val userId = "1001010110111"
+        // Load user data
+        loadUserData()
+    }
 
-        // API을 사용하여 서버에서 데이터 가져오기
+    override fun onResume() {
+        super.onResume()
+        // Update UI with UserHolder data
+        UserHolder.getUser()?.let {
+            updateUI(it)
+        }
+    }
+
+    private fun loadUserData() {
         val apiService = ApiClient.retrofit.create(APIServer::class.java)
         apiService.getUserById(userId).enqueue(object : Callback<User> {
             override fun onResponse(call: Call<User>, response: Response<User>) {
                 if (response.isSuccessful) {
                     val user = response.body()
-
                     user?.let {
-                        // UI에 데이터 설정
-                        userNameTextView.text = "Name: ${it.userName}"
-                        userHeroTextView.text = "Hero Name: ${it.heroName}"
-                        userLvTextView.text = "Lv: ${it.exp?.div(100)}"
-                        userTitleTextView.text = "${it.title}"
-                        userCoinTextView.text = "${it.coin}"
-
-                        progressBarExp.max = 100
-                        it.exp?.let { level ->
-                            progressBarExp.progress = level % 100
-                        }
+                        UserHolder.setUser(it)
+                        updateUI(it)
                     }
                 } else {
                     Log.e("MainActivity", "Response is not successful")
@@ -114,8 +103,23 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun parseUserJson(json: String): User {
-        val gson = Gson()
-        return gson.fromJson(json, User::class.java)
+    fun updateUI(user: User) {
+        userNameTextView.text = user.userName
+        userHeroTextView.text = user.heroName
+        userLvTextView.text = "Lv: ${user.exp?.div(100)}"
+        userTitleTextView.text = user.title
+        userCoinTextView.text = user.coin.toString()
+
+        progressBarExp.max = 100
+        progressBarExp.progress = user.exp?.rem(100) ?: 0
+
+        // character_id에 따라 이미지 설정
+        when (user.characterName) {
+            "토끼" -> Glide.with(this).load(R.raw.rabbit).into(gifImageView)
+            "버섯무리" -> Glide.with(this).load(R.raw.mushroom).into(gifImageView)
+            "무사" -> Glide.with(this).load(R.raw.musa).into(gifImageView)
+            "아이언맨" -> Glide.with(this).load(R.raw.ironman).into(gifImageView)
+            else -> gifImageView.setImageResource(R.raw.default_char)
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.project3
 
 import android.os.Bundle
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +25,7 @@ class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener, I
     private val invenList = mutableListOf<Item>() // 보유리스트
     private val purchasedItemIds = mutableSetOf<Int>() // 보유 아이템 아이디 리스트
     private var equippedItemId: Int? = null // 착용 아이템 아이디
+    private lateinit var userCoinTextView: TextView // 코인 텍스트 뷰
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,12 +39,21 @@ class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener, I
         storeRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         val invenRecyclerView: RecyclerView = findViewById(R.id.inven_recyclerview)
-        invenAdapter = InvenAdapter(invenList, equippedItemId, this, )
+        invenAdapter = InvenAdapter(invenList, equippedItemId, this) {
+            updateMainUi() // Pass the function to update the main UI
+        }
         invenRecyclerView.adapter = invenAdapter
-        invenRecyclerView.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false)
+        invenRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
+        userCoinTextView = findViewById(R.id.text_coin) // 코인 텍스트 뷰 초기화
+        loadUserData()
         loadItems()
         loadReceipts()
+    }
+
+    private fun loadUserData() {
+        val user = UserHolder.getUser()
+        userCoinTextView.text = "${user?.coin}"
     }
 
     private fun loadItems() {
@@ -89,7 +100,6 @@ class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener, I
         })
     }
 
-
     private fun updateItemLists() {
         storeList.clear()
         storeList.addAll(sellItemList.filter { it.item_id !in purchasedItemIds })
@@ -103,22 +113,48 @@ class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener, I
     }
 
     override fun onButtonClick(item: Item) {
-        purchaseItem(item)
+        val user = UserHolder.getUser()
+        if (user != null && (user.coin ?: 0) >= item.item_price) {
+            purchaseItem(item)
+        } else {
+            showError("금화가 부족합니다.")
+        }
     }
 
     private fun purchaseItem(item: Item) {
-        val receipt = Receipt(user = getUserId().toString(), item = item.item_id)
-        apiServer.createReceipts(receipt).enqueue(object : Callback<Receipt> {
-            override fun onResponse(call: Call<Receipt>, response: Response<Receipt>) {
+        val user = UserHolder.getUser()
+        val userId = getUserId().toString()
+
+        // 코인 업데이트 요청
+        val updateCoinRequest = UpdateCoinRequest(userId, -item.item_price)
+        apiServer.updateCoin(userId, updateCoinRequest).enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.isSuccessful) {
-                    loadReceipts()
+                    user?.coin = user?.coin?.minus(item.item_price)
+                    userCoinTextView.text = "Coin: ${user?.coin}"
+                    UserHolder.setUser(user)
+
+                    val receipt = Receipt(user = userId, item = item.item_id)
+                    apiServer.createReceipts(receipt).enqueue(object : Callback<Receipt> {
+                        override fun onResponse(call: Call<Receipt>, response: Response<Receipt>) {
+                            if (response.isSuccessful) {
+                                loadReceipts()
+                            } else {
+                                showError("Failed to purchase item")
+                            }
+                        }
+
+                        override fun onFailure(call: Call<Receipt>, t: Throwable) {
+                            showError("Failed to purchase item: ${t.message}")
+                        }
+                    })
                 } else {
-                    showError("Failed to purchase item")
+                    showError("Failed to update coins")
                 }
             }
 
-            override fun onFailure(call: Call<Receipt>, t: Throwable) {
-                showError("Failed to purchase item: ${t.message}")
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                showError("Failed to update coins: ${t.message}")
             }
         })
     }
@@ -129,6 +165,18 @@ class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener, I
 
     override fun onEquipButtonClick(item: Item) {
         equippedItemId = item.item_id
+        val user = UserHolder.getUser()
+        if (user != null) {
+            user.characterName = item.item_name // Update the characterName
+            UserHolder.setUser(user) // Update the UserHolder
+        }
         invenAdapter.updateEquippedItem(equippedItemId)
+        updateMainUi()
+    }
+
+    private fun updateMainUi() {
+        // Your logic to update the main UI
+        // This can include refreshing views, showing a toast, etc.
+        Toast.makeText(this, "Character updated to ${UserHolder.getUser()?.characterName}", Toast.LENGTH_SHORT).show()
     }
 }
