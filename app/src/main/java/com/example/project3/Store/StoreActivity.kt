@@ -113,25 +113,48 @@ class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener, I
     }
 
     override fun onButtonClick(item: Item) {
-        purchaseItem(item)
+        val user = UserHolder.getUser()
+        if (user != null && (user.coin ?: 0) >= item.item_price) {
+            purchaseItem(item)
+        } else {
+            showError("금화가 부족합니다.")
+        }
     }
 
     private fun purchaseItem(item: Item) {
         val user = UserHolder.getUser()
-        user?.coin = user?.coin?.minus(item.item_price)
-        userCoinTextView.text = "${user?.coin}"
-        val receipt = Receipt(user = getUserId().toString(), item = item.item_id)
-        apiServer.createReceipts(receipt).enqueue(object : Callback<Receipt> {
-            override fun onResponse(call: Call<Receipt>, response: Response<Receipt>) {
+        val userId = getUserId().toString()
+
+        // 코인 업데이트 요청
+        val updateCoinRequest = UpdateCoinRequest(userId, -item.item_price)
+        apiServer.updateCoin(userId, updateCoinRequest).enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.isSuccessful) {
-                    loadReceipts()
+                    user?.coin = user?.coin?.minus(item.item_price)
+                    userCoinTextView.text = "Coin: ${user?.coin}"
+                    UserHolder.setUser(user)
+
+                    val receipt = Receipt(user = userId, item = item.item_id)
+                    apiServer.createReceipts(receipt).enqueue(object : Callback<Receipt> {
+                        override fun onResponse(call: Call<Receipt>, response: Response<Receipt>) {
+                            if (response.isSuccessful) {
+                                loadReceipts()
+                            } else {
+                                showError("Failed to purchase item")
+                            }
+                        }
+
+                        override fun onFailure(call: Call<Receipt>, t: Throwable) {
+                            showError("Failed to purchase item: ${t.message}")
+                        }
+                    })
                 } else {
-                    showError("Failed to purchase item")
+                    showError("Failed to update coins")
                 }
             }
 
-            override fun onFailure(call: Call<Receipt>, t: Throwable) {
-                showError("Failed to purchase item: ${t.message}")
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                showError("Failed to update coins: ${t.message}")
             }
         })
     }
