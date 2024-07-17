@@ -27,6 +27,7 @@ class DiaryActivity : AppCompatActivity() {
     private lateinit var diaryAdapter: DiaryAdapter
     private lateinit var btnCreateDiary: ImageView
     private lateinit var btnCreateToDo: ImageView
+    private lateinit var btnCreateClose: ImageView
 
     companion object {
         const val REQUEST_CODE_CREATE_DIARY = 1
@@ -58,6 +59,12 @@ class DiaryActivity : AppCompatActivity() {
         btnCreateToDo = findViewById(R.id.diary_button1_BT)
         btnCreateToDo.setOnClickListener {
             updateCurrentUserQuests()
+        }
+
+        btnCreateClose = findViewById(R.id.diary_button3_BT)
+        btnCreateClose.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
 
         // 다이어리 데이터 가져오기

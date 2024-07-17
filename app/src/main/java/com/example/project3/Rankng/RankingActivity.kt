@@ -61,6 +61,9 @@ class RankingActivity : AppCompatActivity(), RankingAdapter.OnItemClickListener 
                         rankingRecyclerView.adapter = rankingAdapter
 
                         }
+
+                        // Send updated ranking of current user to server
+                        updateCurrentUserRankingOnServer(currentUser)
                     }
 
                 } else {
