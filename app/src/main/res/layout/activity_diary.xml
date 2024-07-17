@@ -57,11 +57,35 @@
             android:id="@+id/imagePaper1"
             android:layout_width="wrap_content"
             android:layout_height="260dp"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/paper" />
+
+        <ImageView
+            android:id="@+id/quest_place_BT"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/icon_muk"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_quest_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="9dp"
+            android:fontFamily="@font/font1"
+            android:text="의뢰소"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/imagePaper1"
+            app:layout_constraintTop_toTopOf="@+id/imagePaper1" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/diary_list1_RV"
@@ -81,13 +105,37 @@
         android:layout_weight="1">
 
         <ImageView
+            android:id="@+id/diary_place_BT"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/icon_muk"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_diary_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="9dp"
+            android:fontFamily="@font/font1"
+            android:text="기록실"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/imagePaper2"
+            app:layout_constraintTop_toTopOf="@+id/imagePaper2" />
+
+        <ImageView
             android:id="@+id/imagePaper2"
             android:layout_width="wrap_content"
             android:layout_height="260dp"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/paper" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -177,7 +225,8 @@
                 android:text="닫기"
                 android:fontFamily="@font/font1"
                 android:textColor="@android:color/white"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:layout_marginRight="5dp"/>
         </FrameLayout>
     </LinearLayout>
 
