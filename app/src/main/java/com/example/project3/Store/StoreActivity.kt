@@ -1,5 +1,6 @@
 package com.example.project3
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.WindowManager
 import android.widget.TextView
@@ -66,8 +67,14 @@ class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener, I
     }
 
     private fun loadItems() {
+        val progressDialog = ProgressDialog(this)
+        progressDialog.setMessage("Updating quests...")
+        progressDialog.setCancelable(false)
+        progressDialog.show()
+
         apiServer.getItems().enqueue(object : Callback<List<Item>> {
             override fun onResponse(call: Call<List<Item>>, response: Response<List<Item>>) {
+                progressDialog.dismiss()
                 if (response.isSuccessful) {
                     response.body()?.let {
                         sellItemList.clear()
@@ -86,8 +93,14 @@ class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener, I
     }
 
     private fun loadReceipts() {
+        val progressDialog = ProgressDialog(this)
+        progressDialog.setMessage("Updating quests...")
+        progressDialog.setCancelable(false)
+        progressDialog.show()
+
         apiServer.getAllReceipts().enqueue(object : Callback<List<Receipt>> {
             override fun onResponse(call: Call<List<Receipt>>, response: Response<List<Receipt>>) {
+                progressDialog.dismiss()
                 if (response.isSuccessful) {
                     response.body()?.let { receipts ->
                         val userId = getUserId().toString()
