@@ -20,6 +20,7 @@ class RankingAdapter(
         val userNameTextView: TextView = itemView.findViewById(R.id.RankingList_name_TV)
         val rankTextView: TextView = itemView.findViewById(R.id.RankingList_rank_text_TV)
         val rankImageView: ImageView = itemView.findViewById(R.id.RankingList_rank_IV)
+        val titleTextView: TextView = itemView.findViewById(R.id.RankingList_title_TV)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RankingViewHolder {
@@ -32,6 +33,7 @@ class RankingAdapter(
         val currentUser = userList[position]
         holder.userNameTextView.text = currentUser.userName
         holder.rankTextView.text = (position + 1).toString()
+        holder.titleTextView.text = "${currentUser.title}의 경지"
 
         // 배경 설정
         when (position + 1) {

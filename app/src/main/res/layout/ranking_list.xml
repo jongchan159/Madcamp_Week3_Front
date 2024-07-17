@@ -30,13 +30,13 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/RankingList_rank_TV"
-        android:layout_marginLeft="10dp"
+        android:id="@+id/RankingList_title_TV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="화경의 경지"
-        android:textSize="18sp"
-        android:fontFamily="@font/font1"/>
+        android:layout_marginLeft="10dp"
+        android:fontFamily="@font/font1"
+        android:text="~의 경지"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/RankingList_name_TV"

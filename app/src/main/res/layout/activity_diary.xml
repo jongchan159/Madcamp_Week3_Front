@@ -39,7 +39,7 @@
             android:shadowDx="2"
             android:shadowDy="2"
             android:shadowRadius="2"
-            android:text="정보소"
+            android:text="   정보소"
             android:textColor="@color/white"
             android:textSize="30sp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -65,8 +65,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/diary_list1_RV"
-            android:layout_width="333dp"
-            android:layout_height="132dp"
+            android:layout_width="307dp"
+            android:layout_height="138dp"
             android:layout_margin="70dp"
             android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/imagePaper1"
