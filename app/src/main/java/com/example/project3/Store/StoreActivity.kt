@@ -1,6 +1,7 @@
 package com.example.project3
 
 import android.os.Bundle
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +25,7 @@ class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener, I
     private val invenList = mutableListOf<Item>() // 보유리스트
     private val purchasedItemIds = mutableSetOf<Int>() // 보유 아이템 아이디 리스트
     private var equippedItemId: Int? = null // 착용 아이템 아이디
+    private lateinit var userCoinTextView: TextView // 코인 텍스트 뷰
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,8 +45,15 @@ class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener, I
         invenRecyclerView.adapter = invenAdapter
         invenRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
+        userCoinTextView = findViewById(R.id.text_coin) // 코인 텍스트 뷰 초기화
+        loadUserData()
         loadItems()
         loadReceipts()
+    }
+
+    private fun loadUserData() {
+        val user = UserHolder.getUser()
+        userCoinTextView.text = "${user?.coin}"
     }
 
     private fun loadItems() {
@@ -108,6 +117,9 @@ class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener, I
     }
 
     private fun purchaseItem(item: Item) {
+        val user = UserHolder.getUser()
+        user?.coin = user?.coin?.minus(item.item_price)
+        userCoinTextView.text = "${user?.coin}"
         val receipt = Receipt(user = getUserId().toString(), item = item.item_id)
         apiServer.createReceipts(receipt).enqueue(object : Callback<Receipt> {
             override fun onResponse(call: Call<Receipt>, response: Response<Receipt>) {
