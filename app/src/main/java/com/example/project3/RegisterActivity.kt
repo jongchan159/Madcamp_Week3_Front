@@ -54,7 +54,7 @@ class RegisterActivity : AppCompatActivity() {
                     coin = 0,
                     ranking = 0,
                     backgroundId = null,
-                    characterId = null
+                    characterId = "default_char"
                 )
 
                 // 사용자 정보 업데이트
@@ -63,6 +63,7 @@ class RegisterActivity : AppCompatActivity() {
                 user.heroName = heroName
                 user.age = age
                 user.title = "삼류"
+                user.characterId = "default_char"
 
                 // UserHolder에 업데이트된 사용자 저장
                 UserHolder.setUser(user)

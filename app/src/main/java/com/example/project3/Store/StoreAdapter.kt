@@ -46,7 +46,7 @@ class StoreAdapter(
             "버섯무리" -> Glide.with(context).load(R.raw.mushroom).into(holder.storeImage)
             "무사" -> Glide.with(context).load(R.raw.musa).into(holder.storeImage)
             "아이언맨" -> Glide.with(context).load(R.raw.ironman).into(holder.storeImage)
-            
+
             else -> holder.storeImage.setImageResource(R.raw.default_char)
         }
 

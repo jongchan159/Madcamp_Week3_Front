@@ -78,7 +78,6 @@ interface APIServer {
     @GET("receipts/")
     fun getAllReceipts(): Call<List<Receipt>>
 
-
 }
 
 // server가 client한테 보내는 것

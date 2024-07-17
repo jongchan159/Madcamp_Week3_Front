@@ -2,10 +2,12 @@ package com.example.project3
 
 import android.app.ProgressDialog
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,6 +21,13 @@ class DiaryGenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_diarygen)
+
+        // 상단 바를 투명하게 설정
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        window.apply {
+            addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            statusBarColor = android.graphics.Color.TRANSPARENT
+        }
 
         etDiaryContent = findViewById(R.id.et_diary_content)
         btnSaveDiary = findViewById(R.id.button_save)

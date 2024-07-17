@@ -9,12 +9,11 @@ import com.example.project3.Class.Item
 import com.example.project3.Class.Receipt
 import com.example.project3.Store.InvenAdapter
 import com.example.project3.Store.StoreAdapter
-import com.google.android.gms.common.api.Api
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener, InvenAdapter.OnButtonClickListener {
+class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener {
 
     private lateinit var storeAdapter: StoreAdapter
     private lateinit var invenAdapter: InvenAdapter
@@ -37,9 +36,9 @@ class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener, I
         storeRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         val invenRecyclerView: RecyclerView = findViewById(R.id.inven_recyclerview)
-        invenAdapter = InvenAdapter(invenList, equippedItemId, this, )
+        invenAdapter = InvenAdapter(invenList, equippedItemId, this)
         invenRecyclerView.adapter = invenAdapter
-        invenRecyclerView.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false)
+        invenRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         loadItems()
         loadReceipts()
@@ -66,29 +65,31 @@ class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener, I
     }
 
     private fun loadReceipts() {
-        apiServer.getAllReceipts().enqueue(object : Callback<List<Receipt>> {
-            override fun onResponse(call: Call<List<Receipt>>, response: Response<List<Receipt>>) {
-                if (response.isSuccessful) {
-                    response.body()?.let { receipts ->
-                        val userId = getUserId().toString()
-                        val userReceipts = receipts.filter { it.user == userId }
-                        purchasedItemIds.clear()
-                        purchasedItemIds.addAll(userReceipts.map { it.item })
-                        invenList.clear()
-                        invenList.addAll(sellItemList.filter { it.item_id in purchasedItemIds })
-                        updateItemLists()
+        val userId = getUserId()
+        if (userId != null) {
+            apiServer.getUserReceipts(userId).enqueue(object : Callback<List<Receipt>> {
+                override fun onResponse(call: Call<List<Receipt>>, response: Response<List<Receipt>>) {
+                    if (response.isSuccessful) {
+                        response.body()?.let { receipts ->
+                            purchasedItemIds.clear()
+                            purchasedItemIds.addAll(receipts.map { it.item })
+                            invenList.clear()
+                            invenList.addAll(sellItemList.filter { it.item_id in purchasedItemIds })
+                            updateItemLists()
+                        }
+                    } else {
+                        showError("Failed to load receipts")
                     }
-                } else {
-                    showError("Failed to load receipts1")
                 }
-            }
 
-            override fun onFailure(call: Call<List<Receipt>>, t: Throwable) {
-                showError("Failed to load receipts2: ${t.message}")
-            }
-        })
+                override fun onFailure(call: Call<List<Receipt>>, t: Throwable) {
+                    showError("Failed to load receipts: ${t.message}")
+                }
+            })
+        } else {
+            showError("User ID is null")
+        }
     }
-
 
     private fun updateItemLists() {
         storeList.clear()
@@ -98,8 +99,7 @@ class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener, I
     }
 
     private fun getUserId(): String? {
-        val returnId = UserHolder.getUser()?.userId
-        return returnId
+        return UserHolder.getUser()?.userId
     }
 
     override fun onButtonClick(item: Item) {
@@ -127,8 +127,8 @@ class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener, I
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
-    override fun onEquipButtonClick(item: Item) {
+/*    override fun onEquipButtonClick(item: Item) {
         equippedItemId = item.item_id
         invenAdapter.updateEquippedItem(equippedItemId)
-    }
+    }*/
 }
