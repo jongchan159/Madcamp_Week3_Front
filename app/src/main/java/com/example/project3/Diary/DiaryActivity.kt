@@ -1,8 +1,10 @@
 package com.example.project3
 
+import DividerItemDecoration
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -14,6 +16,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -49,6 +52,14 @@ class DiaryActivity : AppCompatActivity() {
         questRecyclerView.layoutManager = LinearLayoutManager(this)
         diaryRecyclerView = findViewById(R.id.diary_list2_RV)
         diaryRecyclerView.layoutManager = LinearLayoutManager(this)
+
+        // 다이어리 구분선 추가
+        val dividerDrawable: Drawable? = ContextCompat.getDrawable(this, R.drawable.divider)
+        if (dividerDrawable != null) {
+            val itemDecoration = DividerItemDecoration(dividerDrawable)
+            diaryRecyclerView.addItemDecoration(itemDecoration)
+            questRecyclerView.addItemDecoration(itemDecoration)
+        }
 
         // 버튼 설정 및 클릭 이벤트 추가
         btnCreateDiary = findViewById(R.id.diary_button2_BT)
