@@ -12,8 +12,8 @@ data class User(
     @SerializedName("hero_name")
     var heroName: String? = "",
 
-    @SerializedName("level")
-    var level: Int? = 1,
+    @SerializedName("exp")
+    var exp: Int? = 1,
 
     @SerializedName("title")
     var title: String? = "",

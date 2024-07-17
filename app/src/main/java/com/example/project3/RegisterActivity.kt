@@ -49,7 +49,7 @@ class RegisterActivity : AppCompatActivity() {
                     userName = userName,
                     heroName = heroName,
                     age = age,
-                    level = 1, // Default values
+                    exp = 1, // Default values
                     title = "삼류",
                     coin = 0,
                     ranking = 0,

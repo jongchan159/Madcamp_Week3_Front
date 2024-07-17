@@ -56,7 +56,7 @@ interface APIServer {
     @POST("diaries/")
     fun createDiary(@Body diary: Diary): Call<Diary>
 
-    @PUT("users/")  // 엔드포인트는 실제 API 경로로 변경
+    @PUT("users/update/")  // 엔드포인트는 실제 API 경로로 변경
     fun updateUsers(@Body users: List<User>): Call<Void>
 
     @PUT("quests/{questId}/")
