@@ -11,7 +11,7 @@
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gifImageView"
-        android:layout_width="150dp"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginBottom="80dp"
@@ -28,6 +28,7 @@
         android:layout_marginTop="-93dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/paper" />
@@ -44,59 +45,55 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
+
     <TextView
         android:id="@+id/user_name"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="20dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="35dp"
         android:fontFamily="@font/font1"
-        android:text="Name:"
+        android:text="Name"
         android:textColor="#000000"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@id/button_store"
-        app:layout_constraintStart_toEndOf="@id/button_quest"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/paper"
+        app:layout_constraintTop_toBottomOf="@+id/user_hero" />
 
     <TextView
         android:id="@+id/user_hero"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/font1"
-        android:text="Hero Name:"
+        android:text="Hero name"
         android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@id/button_store"
-        app:layout_constraintStart_toEndOf="@id/button_quest"
-        app:layout_constraintTop_toBottomOf="@+id/user_name" />
-
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/paper"
+        app:layout_constraintTop_toBottomOf="@+id/background_IV" />
 
     <TextView
         android:id="@+id/user_lv"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="36dp"
         android:fontFamily="@font/font1"
         android:text="Lv."
         android:textColor="#000000"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@id/button_quest"
-        app:layout_constraintTop_toBottomOf="@+id/user_hero" />
+        app:layout_constraintStart_toStartOf="@+id/paper"
+        app:layout_constraintTop_toBottomOf="@+id/user_name" />
 
     <TextView
         android:id="@+id/user_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="35dp"
         android:fontFamily="@font/font1"
         android:text="Title"
         android:textColor="#000000"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@id/button_store"
-        app:layout_constraintTop_toBottomOf="@id/progressBar_exp" />
+        app:layout_constraintBottom_toTopOf="@+id/user_ranking"
+        app:layout_constraintEnd_toEndOf="@id/paper" />
 
     <ImageView
         android:id="@+id/button_store"
@@ -135,11 +132,11 @@
         android:id="@+id/progressBar_exp"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toStartOf="@id/button_store"
-        app:layout_constraintStart_toEndOf="@id/button_quest"
+        android:layout_height="24dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="35dp"
+        app:layout_constraintEnd_toEndOf="@+id/paper"
+        app:layout_constraintStart_toStartOf="@+id/paper"
         app:layout_constraintTop_toBottomOf="@+id/user_lv" />
 
     <TextView
@@ -175,13 +172,13 @@
         android:id="@+id/user_ranking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginEnd="35dp"
         android:fontFamily="@font/font1"
         android:text="Ranking"
         android:textColor="#000000"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/button_ranking"
-        app:layout_constraintTop_toBottomOf="@id/progressBar_exp" />
+        app:layout_constraintBottom_toTopOf="@+id/progressBar_exp"
+        app:layout_constraintEnd_toEndOf="@+id/paper" />
 
     <TextView
         android:id="@+id/text_home"

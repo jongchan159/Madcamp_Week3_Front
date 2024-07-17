@@ -14,7 +14,8 @@ import pl.droidsonroids.gif.GifImageView
 class InvenAdapter(
     private var items: List<Item>,
     private var equippedItemId: Int?,
-    private val listener: OnButtonClickListener
+    private val listener: OnButtonClickListener,
+    private val mainUiUpdater: () -> Unit // Add this parameter
 ) : RecyclerView.Adapter<InvenAdapter.ViewHolder>() {
 
     interface OnButtonClickListener {
@@ -58,6 +59,7 @@ class InvenAdapter(
 
         holder.button.setOnClickListener {
             listener.onEquipButtonClick(invenItem)
+            mainUiUpdater() // Call the function to update the main UI
         }
     }
 
@@ -75,3 +77,4 @@ class InvenAdapter(
         notifyDataSetChanged()
     }
 }
+

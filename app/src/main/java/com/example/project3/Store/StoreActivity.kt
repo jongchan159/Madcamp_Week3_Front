@@ -37,9 +37,11 @@ class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener, I
         storeRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         val invenRecyclerView: RecyclerView = findViewById(R.id.inven_recyclerview)
-        invenAdapter = InvenAdapter(invenList, equippedItemId, this, )
+        invenAdapter = InvenAdapter(invenList, equippedItemId, this) {
+            updateMainUi() // Pass the function to update the main UI
+        }
         invenRecyclerView.adapter = invenAdapter
-        invenRecyclerView.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false)
+        invenRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         loadItems()
         loadReceipts()
@@ -89,7 +91,6 @@ class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener, I
         })
     }
 
-
     private fun updateItemLists() {
         storeList.clear()
         storeList.addAll(sellItemList.filter { it.item_id !in purchasedItemIds })
@@ -129,6 +130,18 @@ class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener, I
 
     override fun onEquipButtonClick(item: Item) {
         equippedItemId = item.item_id
+        val user = UserHolder.getUser()
+        if (user != null) {
+            user.characterName = item.item_name // Update the characterName
+            UserHolder.setUser(user) // Update the UserHolder
+        }
         invenAdapter.updateEquippedItem(equippedItemId)
+        updateMainUi()
+    }
+
+    private fun updateMainUi() {
+        // Your logic to update the main UI
+        // This can include refreshing views, showing a toast, etc.
+        Toast.makeText(this, "Character updated to ${UserHolder.getUser()?.characterName}", Toast.LENGTH_SHORT).show()
     }
 }
