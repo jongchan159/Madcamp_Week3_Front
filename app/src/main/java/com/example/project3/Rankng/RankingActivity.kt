@@ -109,13 +109,13 @@ class RankingActivity : AppCompatActivity(), RankingAdapter.OnItemClickListener 
         val rankingTextView = dialogView.findViewById<TextView>(R.id.Ranking_dialog_rankingTextView)
         val okButton = dialogView.findViewById<Button>(R.id.Ranking_dialog_okButton)
 
-        userNameTextView.text = "Name: ${user.userName}"
-        heroNameTextView.text = "Hero Name: ${user.heroName}"
-        levelTextView.text = "Level: ${(((user.exp) ?: 0) / 1000)}"
-        titleTextView.text = "Title: ${user.title}"
-        coinTextView.text = "Coin: ${user.coin}"
-        ageTextView.text = "Age: ${user.age}"
-        rankingTextView.text = "Ranking: ${user.ranking}"
+        userNameTextView.text = "별명: ${user.userName}"
+        heroNameTextView.text = "영웅: ${user.heroName}"
+        levelTextView.text = "Lv. ${(((user.exp) ?: 0) / 1000)}"
+        coinTextView.text = "재화 : ${user.coin}"
+        titleTextView.text = "경지: ${user.title}"
+        ageTextView.text = "나이: ${user.age}"
+        rankingTextView.text = "순위: ${user.ranking}"
 
         val builder = AlertDialog.Builder(this)
         builder.setView(dialogView)

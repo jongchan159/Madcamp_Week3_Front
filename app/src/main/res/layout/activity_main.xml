@@ -21,7 +21,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/paper"
+        android:id="@+id/image_paper"
         android:layout_width="0dp"
         android:layout_height="458dp"
         android:layout_marginStart="10dp"
@@ -55,7 +55,7 @@
         android:text="Name"
         android:textColor="#000000"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/paper"
+        app:layout_constraintStart_toStartOf="@+id/image_paper"
         app:layout_constraintTop_toBottomOf="@+id/user_hero" />
 
     <TextView
@@ -68,7 +68,7 @@
         android:text="Hero name"
         android:textColor="#000000"
         android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/paper"
+        app:layout_constraintStart_toStartOf="@+id/image_paper"
         app:layout_constraintTop_toBottomOf="@+id/background_IV" />
 
     <TextView
@@ -80,7 +80,7 @@
         android:text="Lv."
         android:textColor="#000000"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/paper"
+        app:layout_constraintStart_toStartOf="@+id/image_paper"
         app:layout_constraintTop_toBottomOf="@+id/user_name" />
 
     <TextView
@@ -93,7 +93,7 @@
         android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/user_ranking"
-        app:layout_constraintEnd_toEndOf="@id/paper" />
+        app:layout_constraintEnd_toEndOf="@id/image_paper" />
 
     <ImageView
         android:id="@+id/button_store"
@@ -103,7 +103,7 @@
         android:layout_marginEnd="10dp"
         android:alpha="0.8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/paper"
+        app:layout_constraintTop_toBottomOf="@+id/image_paper"
         app:srcCompat="@drawable/icon_muk" />
 
     <ImageView
@@ -114,7 +114,7 @@
         android:layout_marginTop="-150dp"
         android:alpha="0.8"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/paper"
+        app:layout_constraintTop_toBottomOf="@+id/image_paper"
         app:srcCompat="@drawable/icon_muk" />
 
     <ImageView
@@ -125,7 +125,7 @@
         android:alpha="0.8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/paper"
+        app:layout_constraintTop_toBottomOf="@+id/image_paper"
         app:srcCompat="@drawable/icon_muk" />
 
     <ProgressBar
@@ -135,8 +135,8 @@
         android:layout_height="24dp"
         android:layout_marginStart="35dp"
         android:layout_marginEnd="35dp"
-        app:layout_constraintEnd_toEndOf="@+id/paper"
-        app:layout_constraintStart_toStartOf="@+id/paper"
+        app:layout_constraintEnd_toEndOf="@+id/image_paper"
+        app:layout_constraintStart_toStartOf="@+id/image_paper"
         app:layout_constraintTop_toBottomOf="@+id/user_lv" />
 
     <TextView
@@ -178,7 +178,7 @@
         android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/progressBar_exp"
-        app:layout_constraintEnd_toEndOf="@+id/paper" />
+        app:layout_constraintEnd_toEndOf="@+id/image_paper" />
 
     <TextView
         android:id="@+id/text_home"

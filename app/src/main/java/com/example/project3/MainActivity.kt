@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         val btnQuest = findViewById<ImageView>(R.id.button_quest)
         val btnStore = findViewById<ImageView>(R.id.button_store)
         val btnRanking = findViewById<ImageView>(R.id.button_ranking)
+        val imagePaper = findViewById<ImageView>(R.id.image_paper)
 
         // user id
         userId = UserHolder.getUser()?.userId.toString()
@@ -63,6 +64,10 @@ class MainActivity : AppCompatActivity() {
         btnRanking.setOnClickListener {
             val intent = Intent(this, RankingActivity::class.java)
             startActivity(intent)
+        }
+
+        imagePaper.setOnClickListener {
+            showRankingDialog(UserHolder.getUser())
         }
 
         // UI 요소 초기화
@@ -153,8 +158,8 @@ class MainActivity : AppCompatActivity() {
         val dialogMessage: TextView = dialogView.findViewById(R.id.dialog_message)
         val dialogOkButton: Button = dialogView.findViewById(R.id.dialog_ok_button)
 
-        dialogTitle.text = "Level Up!"
-        dialogMessage.text = "Congratulations! You have reached level $newLevel. You have earned 100 coins!"
+        dialogTitle.text = "레벨 업"
+        dialogMessage.text = "축하드립니다! 당신의 영웅은 $newLevel 레벨에 도달했습니다. 당신은 100금화를 획득합니다!"
 
         dialogOkButton.setOnClickListener {
             dialog.dismiss()
@@ -172,8 +177,8 @@ class MainActivity : AppCompatActivity() {
         val dialogMessage: TextView = dialogView.findViewById(R.id.dialog_message)
         val dialogOkButton: Button = dialogView.findViewById(R.id.dialog_ok_button)
 
-        dialogTitle.text = "Title Up!"
-        dialogMessage.text = "Congratulations! You have earned the title: $newTitle!"
+        dialogTitle.text = "경지가 올랐습니다!"
+        dialogMessage.text = "축하드립니다! 당신의 영웅은 ${newTitle}의 경지에 도달했습니다!"
 
         dialogOkButton.setOnClickListener {
             dialog.dismiss()
@@ -233,4 +238,42 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
+    private fun showRankingDialog(user: User?) {
+        if (user == null) {
+            Toast.makeText(this, "User data not available", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_ranking, null)
+
+        val userNameTextView = dialogView.findViewById<TextView>(R.id.Ranking_dialog_userNameTextView)
+        val heroNameTextView = dialogView.findViewById<TextView>(R.id.Ranking_dialog_heroNameTextView)
+        val levelTextView = dialogView.findViewById<TextView>(R.id.Ranking_dialog_levelTextView)
+        val titleTextView = dialogView.findViewById<TextView>(R.id.Ranking_dialog_titleTextView)
+        val coinTextView = dialogView.findViewById<TextView>(R.id.Ranking_dialog_coinTextView)
+        val ageTextView = dialogView.findViewById<TextView>(R.id.Ranking_dialog_ageTextView)
+        val rankingTextView = dialogView.findViewById<TextView>(R.id.Ranking_dialog_rankingTextView)
+        val okButton = dialogView.findViewById<Button>(R.id.Ranking_dialog_okButton)
+
+        userNameTextView.text = "별명: ${user.userName}"
+        heroNameTextView.text = "영웅: ${user.heroName}"
+        levelTextView.text = "Lv. ${(((user.exp) ?: 0) / 1000)}"
+        coinTextView.text = "재화 : ${user.coin}"
+        titleTextView.text = "경지: ${user.title}"
+        ageTextView.text = "나이: ${user.age}"
+        rankingTextView.text = "순위: ${user.ranking}"
+
+        val builder = AlertDialog.Builder(this)
+        builder.setView(dialogView)
+
+        val alertDialog = builder.create()
+
+        okButton.setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+        alertDialog.show()
+    }
+
 }
