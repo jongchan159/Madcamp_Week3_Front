@@ -32,4 +32,5 @@ data class User(
 
     @SerializedName("character_id")
     var characterId: Int? = null,
+
 )

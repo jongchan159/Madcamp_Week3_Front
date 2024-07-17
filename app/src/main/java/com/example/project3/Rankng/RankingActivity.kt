@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,8 +33,6 @@ class RankingActivity : AppCompatActivity(), RankingAdapter.OnItemClickListener 
             statusBarColor = android.graphics.Color.TRANSPARENT
         }
 
-        // 여기 패치 느리면 thread 붙여야 할 것 같다.
-
         rankingRecyclerView = findViewById(R.id.ranking_rank_RV)
         rankingRecyclerView.layoutManager = LinearLayoutManager(this)
     }
@@ -46,24 +43,26 @@ class RankingActivity : AppCompatActivity(), RankingAdapter.OnItemClickListener 
                 if (response.isSuccessful && response.body() != null) {
                     val users = response.body()!!.sortedByDescending { it.exp }
 
+                    // Get the current user
+                    val currentUser = UserHolder.getUser()
+
                     // Update ranking based on sorted exp
-                    val updatedUsers = users.map { it.copy() }  // 복제하여 새로운 리스트 생성
-                    for ((index, user) in updatedUsers.withIndex()) {
-                        user.ranking = index + 1
+                    if (currentUser != null) {
+                        val currentUserId = currentUser.userId
+                        val updatedUsers = users.map { it.copy() }  // 복제하여 새로운 리스트 생성
+                        for ((index, user) in updatedUsers.withIndex()) {
+                            user.ranking = index + 1
+                            if (user.userId == currentUserId) {
+                                currentUser.ranking = user.ranking
+                            }
+
+                        // Set up RecyclerView
+                        rankingAdapter = RankingAdapter(updatedUsers, this@RankingActivity)
+                        rankingRecyclerView.adapter = rankingAdapter
+
+                        }
                     }
 
-                    // Send updated ranking to server
-                    updateRankingsOnServer(updatedUsers)
-
-                    // Log each userName to check if they are correctly fetched
-                    for (user in updatedUsers) {
-                        Log.d("jangjiwon", "User Name: ${user.userName}")
-                        Log.d("jangjiwon", "Updated User: $user")
-                    }
-
-                    // Set up RecyclerView
-                    rankingAdapter = RankingAdapter(updatedUsers, this@RankingActivity)
-                    rankingRecyclerView.adapter = rankingAdapter
                 } else {
                     Log.e("RankingActivity", "Failed to get users. Response code: ${response.code()}")
                     Toast.makeText(this@RankingActivity, "Failed to get users", Toast.LENGTH_SHORT).show()
@@ -77,26 +76,23 @@ class RankingActivity : AppCompatActivity(), RankingAdapter.OnItemClickListener 
         })
     }
 
-    private fun updateRankingsOnServer(users: List<User>) {
-        ApiClient.apiService.updateUsers(users).enqueue(object : Callback<Void> {
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+    private fun updateCurrentUserRankingOnServer(currentUser: User) {
+        ApiClient.apiService.updateUser(currentUser.userId!!, currentUser).enqueue(object : Callback<User> {
+            override fun onResponse(call: Call<User>, response: Response<User>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(this@RankingActivity, "Rankings updated successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@RankingActivity, "Current user's ranking updated successfully", Toast.LENGTH_SHORT).show()
                 } else {
-                    Log.e("RankingActivity", "Failed to update rankings. Response code: ${response.code()}")
-                    Toast.makeText(this@RankingActivity, "Failed to update rankings", Toast.LENGTH_SHORT).show()
+                    Log.e("RankingActivity", "Failed to update current user's ranking. Response code: ${response.code()}")
+                    Toast.makeText(this@RankingActivity, "Failed to update current user's ranking", Toast.LENGTH_SHORT).show()
                 }
             }
 
-            override fun onFailure(call: Call<Void>, t: Throwable) {
+            override fun onFailure(call: Call<User>, t: Throwable) {
                 Log.e("RankingActivity", "Failed to connect to server: ${t.message}", t)
                 Toast.makeText(this@RankingActivity, "Failed to connect to server", Toast.LENGTH_SHORT).show()
             }
         })
     }
-
-
-
 
     override fun onItemClick(user: User) {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_ranking, null)
@@ -112,7 +108,7 @@ class RankingActivity : AppCompatActivity(), RankingAdapter.OnItemClickListener 
 
         userNameTextView.text = "Name: ${user.userName}"
         heroNameTextView.text = "Hero Name: ${user.heroName}"
-        levelTextView.text = "Level: ${(((user.exp)?: 0) /1000)}"
+        levelTextView.text = "Level: ${(((user.exp) ?: 0) / 1000)}"
         titleTextView.text = "Title: ${user.title}"
         coinTextView.text = "Coin: ${user.coin}"
         ageTextView.text = "Age: ${user.age}"

@@ -78,7 +78,9 @@ interface APIServer {
     @GET("receipts/")
     fun getAllReceipts(): Call<List<Receipt>>
 
-
+    //경험치 업뎃
+    @PUT("users/{userId}/")
+    fun updateUser(@Path("userId") userId: String, @Body user: User): Call<User>
 }
 
 // server가 client한테 보내는 것

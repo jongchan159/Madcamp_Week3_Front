@@ -194,6 +194,28 @@ class DiaryActivity : AppCompatActivity() {
             })
         }
 
+        fun updateUserExp() {
+            val currentUser = UserHolder.getUser()
+            if (currentUser != null) {
+                currentUser.exp = (currentUser.exp ?: 0) + 10
+                Log.d("jangjiwon", "Updated experience: ${currentUser.exp}")
+
+                ApiClient.apiService.updateUser(currentUser.userId!!, currentUser).enqueue(object : Callback<User> {
+                    override fun onResponse(call: Call<User>, response: Response<User>) {
+                        if (response.isSuccessful) {
+                            Log.d("jangjiwon", "User experience updated successfully")
+                        } else {
+                            Log.e("jangjiwon", "Failed to update user experience: ${response.code()} - ${response.message()}")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<User>, t: Throwable) {
+                        Log.e("DiaryActivity", "Error updating user experience", t)
+                    }
+                })
+            }
+        }
+
         val handler = Handler(Looper.getMainLooper())
         val updateRunnable = object : Runnable {
             override fun run() {
@@ -214,6 +236,7 @@ class DiaryActivity : AppCompatActivity() {
                         progressBar.progress = progressBar.max
                         isRunning = false
                         updateProgressTimeOnServer(completeTimeInSeconds)
+                        updateUserExp()
                     }
 
                     handler.postDelayed(this, 1000)
