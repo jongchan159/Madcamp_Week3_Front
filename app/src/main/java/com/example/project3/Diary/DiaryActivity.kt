@@ -1,5 +1,6 @@
 package com.example.project3
 
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
@@ -267,15 +268,15 @@ class DiaryActivity : AppCompatActivity() {
             }
         }
 
-        val dialog = AlertDialog.Builder(this)
-            .setTitle("Quest Details")
+        val dialog = AlertDialog.Builder(this, R.style.TransparentDialog)
+/*            .setTitle("Quest Details")*/
             .setView(dialogView)
-            .setPositiveButton("OK") { _, _ ->
+/*            .setPositiveButton("OK") { _, _ ->*//*
                 if (isRunning) {
                     handler.removeCallbacks(updateRunnable)
                     updateProgressTimeOnServer(elapsedTimeInSeconds)
-                }
-            }
+                }*//*
+            }*/
             .create()
 
         // 다이얼로그가 열릴 때 서버에서 진행 시간 가져오기
@@ -305,6 +306,7 @@ class DiaryActivity : AppCompatActivity() {
 
         dialog.show()
     }
+
 
     // Function to calculate total seconds from HH:mm:ss formatted string
     private fun calculateTotalSecondsFromString(timeString: String): Int {
