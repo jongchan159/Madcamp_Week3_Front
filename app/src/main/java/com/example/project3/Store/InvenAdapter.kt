@@ -51,11 +51,11 @@ class InvenAdapter(
         }
 
         // 버튼 텍스트 및 상태 설정
-/*        if (invenItem.item_id == equippedItemId) {
+        if (invenItem.item_id == equippedItemId) {
             holder.button.text = "착용중"
         } else {
             holder.button.text = "착용하기"
-        }*/
+        }
 
         holder.button.setOnClickListener {
             listener.onEquipButtonClick(invenItem)
