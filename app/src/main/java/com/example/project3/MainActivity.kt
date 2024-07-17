@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var userLvTextView: TextView
     private lateinit var userTitleTextView: TextView
     private lateinit var userCoinTextView: TextView
+    private lateinit var userRankTextView: TextView
     private lateinit var progressBarExp: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,6 +77,7 @@ class MainActivity : AppCompatActivity() {
         userLvTextView = findViewById(R.id.user_lv)
         userTitleTextView = findViewById(R.id.user_title)
         userCoinTextView = findViewById(R.id.text_coin)
+        userRankTextView = findViewById(R.id.user_ranking)
         progressBarExp = findViewById(R.id.progressBar_exp)
         gifImageView = findViewById(R.id.gifImageView)
 
@@ -207,6 +209,7 @@ class MainActivity : AppCompatActivity() {
         userLvTextView.text = "Lv: ${user.exp?.div(100)}"
         userTitleTextView.text = user.title
         userCoinTextView.text = user.coin.toString()
+        userRankTextView.text = "${user.ranking}위"
 
         progressBarExp.max = 100
         progressBarExp.progress = user.exp?.rem(100) ?: 0
