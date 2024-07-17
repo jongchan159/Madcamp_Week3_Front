@@ -75,7 +75,7 @@ class GoogleloginActivity : AppCompatActivity() {
             val account = completedTask.getResult(ApiException::class.java)
 
             // 구글 로그인 성공 처리
-            Toast.makeText(this, "구글 로그인 성공: ${account?.displayName}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "반갑습니다 ${account?.displayName}님!", Toast.LENGTH_SHORT).show()
 
             // ID를 가져와서 사용
             val id = account?.id

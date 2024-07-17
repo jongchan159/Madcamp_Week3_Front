@@ -38,7 +38,7 @@ class DiaryGenActivity : AppCompatActivity() {
             if (content.isNotBlank()) {
                 saveDiary(content)
             } else {
-                Toast.makeText(this, "Please enter content", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "내용을 입력하세요.", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -74,17 +74,17 @@ class DiaryGenActivity : AppCompatActivity() {
             override fun onResponse(call: Call<Diary>, response: Response<Diary>) {
                 progressDialog.dismiss()
                 if (response.isSuccessful) {
-                    Toast.makeText(this@DiaryGenActivity, "Diary saved!", Toast.LENGTH_SHORT).show()
+/*                    Toast.makeText(this@DiaryGenActivity, "기록 저장 성공", Toast.LENGTH_SHORT).show()*/
                     setResult(RESULT_OK) // 성공적으로 저장된 경우 RESULT_OK 설정
                     finish() // 다이어리를 저장한 후 현재 액티비티를 종료합니다.
                 } else {
-                    Toast.makeText(this@DiaryGenActivity, "Failed to save diary", Toast.LENGTH_SHORT).show()
+/*                    Toast.makeText(this@DiaryGenActivity, "Failed to save diary", Toast.LENGTH_SHORT).show()*/
                 }
             }
 
             override fun onFailure(call: Call<Diary>, t: Throwable) {
                 progressDialog.dismiss()
-                Toast.makeText(this@DiaryGenActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+/*                Toast.makeText(this@DiaryGenActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()*/
             }
         })
     }

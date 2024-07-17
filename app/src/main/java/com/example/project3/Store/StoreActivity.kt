@@ -209,6 +209,6 @@ class StoreActivity : AppCompatActivity(), StoreAdapter.OnButtonClickListener, I
     private fun updateMainUi() {
         // Your logic to update the main UI
         // This can include refreshing views, showing a toast, etc.
-        Toast.makeText(this, "Character updated to ${UserHolder.getUser()?.characterName}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "${UserHolder.getUser()?.characterName} 착용", Toast.LENGTH_SHORT).show()
     }
 }

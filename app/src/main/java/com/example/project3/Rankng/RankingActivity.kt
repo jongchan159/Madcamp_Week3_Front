@@ -92,7 +92,6 @@ class RankingActivity : AppCompatActivity(), RankingAdapter.OnItemClickListener 
         ApiClient.apiService.updateUser(currentUser.userId!!, currentUser).enqueue(object : Callback<User> {
             override fun onResponse(call: Call<User>, response: Response<User>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(this@RankingActivity, "Current user's ranking updated successfully", Toast.LENGTH_SHORT).show()
                 } else {
                     Log.e("RankingActivity", "Failed to update current user's ranking. Response code: ${response.code()}")
                     Toast.makeText(this@RankingActivity, "Failed to update current user's ranking", Toast.LENGTH_SHORT).show()
